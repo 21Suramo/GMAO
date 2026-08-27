@@ -1,0 +1,16 @@
+{
+  "name": "gmao-notification-server",
+  "version": "1.0.0",
+  "description": "Serveur de notifications temps réel (WebSocket) pour l'application GMAO Datex-Ohmeda — MEDICANA",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "ws": "^8.18.0"
+  },
+  "author": "MEDICANA - PFE GMAO",
+  "license": "UNLICENSED"
+}

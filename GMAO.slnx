@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/GMAO.Application/GMAO.Application.csproj" />
+    <Project Path="src/GMAO.Domain/GMAO.Domain.csproj" />
+    <Project Path="src/GMAO.Infrastructure/GMAO.Infrastructure.csproj" />
+    <Project Path="src/GMAO.Persistence/GMAO.Persistence.csproj" />
+    <Project Path="src/GMAO.Presentation.Wpf/GMAO.Presentation.Wpf.csproj" />
+    <Project Path="src/GMAO.Shared/GMAO.Shared.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/GMAO.Tests.Unit/GMAO.Tests.Unit.csproj" />
+  </Folder>
+</Solution>

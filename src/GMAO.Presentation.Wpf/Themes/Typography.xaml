@@ -1,0 +1,41 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--
+        Hiérarchie typographique unifiée. Remplace les 3 échelles de titre hétérogènes
+        constatées dans l'audit (14 / 16 / 22 selon les vues) par 4 rôles clairs.
+        Ces styles sont keyés (pas implicites) pour ne pas repeindre tous les TextBlock ;
+        on les applique explicitement via Style="{StaticResource TitrePage}" etc.
+        Dépend de Colors.xaml (PinceauTexte / PinceauTexteSecondaire).
+    -->
+
+    <!--  Titre principal d'une page/module (ex-échelle 22)  -->
+    <Style x:Key="TitrePage" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{StaticResource PinceauMarqueSombre}" />
+        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+    </Style>
+
+    <!--  Titre de section / carte / panneau (ex-échelle 16)  -->
+    <Style x:Key="TitreSection" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{StaticResource PinceauTexte}" />
+        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+    </Style>
+
+    <!--  Texte courant (corps, libellés de formulaire)  -->
+    <Style x:Key="TexteCourant" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{StaticResource PinceauTexte}" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+
+    <!--  Texte technique / secondaire (n° de série, métadonnées, valeurs monospace)  -->
+    <Style x:Key="TexteTechnique" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Consolas, Cascadia Mono, Courier New" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Foreground" Value="{StaticResource PinceauTexteSecondaire}" />
+    </Style>
+
+</ResourceDictionary>

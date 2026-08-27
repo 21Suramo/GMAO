@@ -1,0 +1,150 @@
+﻿<Window
+    x:Class="GMAO.Presentation.Wpf.Views.LoginWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conv="clr-namespace:GMAO.Presentation.Wpf.Converters"
+    Title="Connexion — GMAO Datex-Ohmeda"
+    Width="900"
+    Height="540"
+    FontFamily="Segoe UI"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <conv:StringVersVisibiliteConverter x:Key="StrVisib" />
+        <conv:BoolInverseConverter x:Key="BoolInv" />
+        <conv:BoolVersVisibiliteConverter x:Key="BoolVisib" />
+        <LinearGradientBrush x:Key="Brand" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Offset="0" Color="#0F2027" />
+            <GradientStop Offset="0.5" Color="#203A43" />
+            <GradientStop Offset="1" Color="#2C5364" />
+        </LinearGradientBrush>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.1*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--  Panneau marque  -->
+        <Grid Grid.Column="0" Background="{StaticResource Brand}">
+            <StackPanel Margin="48,0" VerticalAlignment="Center">
+                <TextBlock
+                    FontSize="64"
+                    FontWeight="Bold"
+                    Foreground="#4FC3F7"
+                    Text="GMAO" />
+                <TextBlock
+                    Margin="2,6,0,0"
+                    FontSize="18"
+                    Foreground="#E0F7FA"
+                    Text="Maintenance des respirateurs d'anesthésie" />
+                <TextBlock
+                    Margin="2,4,0,0"
+                    FontSize="14"
+                    Foreground="#80DEEA"
+                    Text="Datex-Ohmeda · Aespire · Avance · Aisys" />
+                <Border
+                    Height="1"
+                    Margin="2,28,40,24"
+                    Background="#33FFFFFF" />
+                <TextBlock
+                    FontSize="20"
+                    FontWeight="SemiBold"
+                    Foreground="White"
+                    Text="MEDICANA" />
+                <TextBlock
+                    Margin="0,2,0,0"
+                    FontSize="13"
+                    Foreground="#B0BEC5"
+                    Text="Distributeur officiel Datex-Ohmeda" />
+            </StackPanel>
+        </Grid>
+
+        <!--  Panneau formulaire  -->
+        <Border Grid.Column="1" Background="White">
+            <StackPanel Margin="44,0" VerticalAlignment="Center">
+                <TextBlock
+                    FontSize="28"
+                    FontWeight="SemiBold"
+                    Foreground="#203A43"
+                    Text="Connexion" />
+                <TextBlock
+                    Margin="0,4,0,28"
+                    FontSize="14"
+                    Foreground="#78909C"
+                    Text="Accédez à votre espace SAV" />
+
+                <TextBlock
+                    Margin="0,0,0,6"
+                    FontSize="13"
+                    Foreground="#455A64"
+                    Text="Identifiant" />
+                <TextBox
+                    x:Name="ChampLogin"
+                    Height="42"
+                    Padding="10,0"
+                    VerticalContentAlignment="Center"
+                    BorderBrush="#CFD8DC"
+                    BorderThickness="1"
+                    FontSize="15"
+                    Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBlock
+                    Margin="0,18,0,6"
+                    FontSize="13"
+                    Foreground="#455A64"
+                    Text="Mot de passe" />
+                <PasswordBox
+                    x:Name="ChampMotDePasse"
+                    Height="42"
+                    Padding="10,0"
+                    VerticalContentAlignment="Center"
+                    BorderBrush="#CFD8DC"
+                    BorderThickness="1"
+                    FontSize="15" />
+
+                <TextBlock
+                    Margin="0,16,0,0"
+                    FontSize="13"
+                    Foreground="#D32F2F"
+                    Text="{Binding MessageErreur}"
+                    TextWrapping="Wrap"
+                    Visibility="{Binding MessageErreur, Converter={StaticResource StrVisib}}" />
+
+                <Button
+                    x:Name="BoutonConnexion"
+                    Height="44"
+                    Margin="0,24,0,0"
+                    BorderThickness="0"
+                    Command="{Binding ConnexionCommand}"
+                    Content="Se connecter"
+                    Cursor="Hand"
+                    FontSize="15"
+                    FontWeight="SemiBold"
+                    Foreground="White"
+                    IsEnabled="{Binding EnCours, Converter={StaticResource BoolInv}}">
+                    <Button.Background>
+                        <SolidColorBrush Color="#2C5364" />
+                    </Button.Background>
+                </Button>
+
+                <TextBlock
+                    Margin="0,12,0,0"
+                    HorizontalAlignment="Center"
+                    FontSize="13"
+                    Foreground="#78909C"
+                    Text="Connexion en cours…"
+                    Visibility="{Binding EnCours, Converter={StaticResource BoolVisib}}" />
+
+                <TextBlock
+                    Margin="0,28,0,0"
+                    HorizontalAlignment="Center"
+                    FontSize="12"
+                    FontStyle="Italic"
+                    Foreground="#B0BEC5"
+                    Text="Compte par défaut : admin / Admin@123" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

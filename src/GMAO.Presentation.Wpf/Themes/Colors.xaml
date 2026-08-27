@@ -1,0 +1,57 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--
+        Palette du design system GMAO — extraite des couleurs DÉJÀ utilisées dans les vues
+        (aucune nouvelle teinte inventée). Deux niveaux : Color (réutilisable dans les
+        dégradés) et SolidColorBrush nommé sémantiquement (usage courant).
+        
+        NOTE ERREUR : le code contenait deux rouges d'erreur (#D32F2F sur LoginWindow,
+        #C62828 ailleurs — Interventions, Parc, Statistiques). #C62828 domine : c'est lui
+        retenu ici comme couleur d'erreur unique. => LoginWindow.xaml (#D32F2F) reste À CORRIGER
+        pour pointer sur PinceauErreur.
+        NOTE INFO/SUCCÈS : #0277BD était réutilisé à la fois pour des messages de succès et
+        d'info, cassant la sémantique. Ici Succès = #2E7D32 (déjà utilisé pour les états OK),
+        Info = #0277BD, bien distincts.
+    -->
+
+    <!--  ===== Couleurs de marque =====  -->
+    <Color x:Key="CouleurMarqueSombre">#203A43</Color>
+    <Color x:Key="CouleurMarque">#2C5364</Color>
+    <Color x:Key="CouleurAccent">#4FC3F7</Color>
+
+    <!--  ===== Neutres / texte =====  -->
+    <Color x:Key="CouleurTexte">#37474F</Color>
+    <Color x:Key="CouleurTexteSecondaire">#78909C</Color>
+    <Color x:Key="CouleurBordure">#CFD8DC</Color>
+    <Color x:Key="CouleurSurface">#FFFFFF</Color>
+    <Color x:Key="CouleurSurfaceSecondaire">#ECEFF1</Color>
+
+    <!--  ===== Sémantique état =====  -->
+    <Color x:Key="CouleurErreur">#C62828</Color>
+    <Color x:Key="CouleurSucces">#2E7D32</Color>
+    <Color x:Key="CouleurInfo">#0277BD</Color>
+
+    <!--  ===== Pinceaux de marque =====  -->
+    <SolidColorBrush x:Key="PinceauMarqueSombre" Color="{StaticResource CouleurMarqueSombre}" />
+    <SolidColorBrush x:Key="PinceauMarque" Color="{StaticResource CouleurMarque}" />
+    <SolidColorBrush x:Key="PinceauAccent" Color="{StaticResource CouleurAccent}" />
+
+    <!--  ===== Pinceaux neutres / texte =====  -->
+    <SolidColorBrush x:Key="PinceauTexte" Color="{StaticResource CouleurTexte}" />
+    <SolidColorBrush x:Key="PinceauTexteSecondaire" Color="{StaticResource CouleurTexteSecondaire}" />
+    <SolidColorBrush x:Key="PinceauBordure" Color="{StaticResource CouleurBordure}" />
+    <SolidColorBrush x:Key="PinceauSurface" Color="{StaticResource CouleurSurface}" />
+    <SolidColorBrush x:Key="PinceauSurfaceSecondaire" Color="{StaticResource CouleurSurfaceSecondaire}" />
+
+    <!--  ===== Pinceaux sémantiques =====  -->
+    <SolidColorBrush x:Key="PinceauErreur" Color="{StaticResource CouleurErreur}" />
+    <SolidColorBrush x:Key="PinceauSucces" Color="{StaticResource CouleurSucces}" />
+    <SolidColorBrush x:Key="PinceauInfo" Color="{StaticResource CouleurInfo}" />
+
+    <!--  Dégradé de marque (bandeaux / en-têtes), repris du gradient inline de LoginWindow  -->
+    <LinearGradientBrush x:Key="PinceauDegradeMarque" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Offset="0" Color="{StaticResource CouleurMarqueSombre}" />
+        <GradientStop Offset="1" Color="{StaticResource CouleurMarque}" />
+    </LinearGradientBrush>
+
+</ResourceDictionary>

@@ -1,0 +1,39 @@
+# Build .NET
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+*.user
+*.suo
+.vs/
+
+# Rider / VS
+.idea/
+
+# Base de données locale SQLite
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+
+# Logs Serilog
+logs/
+
+# Node.js (serveur de notifications)
+node_modules/
+npm-debug.log*
+.env
+
+# Fichiers uploadés (photos/vidéos/docs d'interventions)
+assets/uploads/
+
+# Rapports PDF générés
+reports/generated/
+
+# Sorties de publication
+publish/
+
+# Raccourcis Windows (chemins absolus, spécifiques au poste)
+*.lnk

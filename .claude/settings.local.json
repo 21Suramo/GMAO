@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(npm *)",
+      "PowerShell($paths = @\\(\"C:\\\\Program Files\\\\dotnet\\\\dotnet.exe\", \"C:\\\\Program Files \\(x86\\)\\\\dotnet\\\\dotnet.exe\", \"$env:LOCALAPPDATA\\\\Microsoft\\\\dotnet\\\\dotnet.exe\"\\); foreach \\($p in $paths\\) { if \\(Test-Path $p\\) { Write-Output \"TROUVE: $p\"; & $p --version } else { Write-Output \"absent: $p\" } })",
+      "PowerShell(winget install *)",
+      "PowerShell($dotnet = \"C:\\\\Program Files\\\\dotnet\\\\dotnet.exe\"; if \\(Test-Path $dotnet\\) { Write-Output \"OK: $dotnet\"; & $dotnet --version; Write-Output \"--- SDKs ---\"; & $dotnet --list-sdks } else { Write-Output \"Introuvable a l'emplacement standard\" })",
+      "PowerShell(Start-Process \"windowsdefender://smartappcontrol\" ; Write-Output \"Page Smart App Control ouverte dans Securite Windows.\")",
+      "Bash(node *)",
+      "PowerShell(Stop-Process *)",
+      "PowerShell(dotnet build *)",
+      "PowerShell($env:PATH = \"C:\\\\Program Files\\\\dotnet;$env:PATH\"; Set-Location \"C:\\\\Users\\\\pc\\\\Desktop\\\\GMAO\"; dotnet tool restore 2>&1 | Select-Object -Last 3; dotnet ef migrations add AjoutTelephoneUtilisateur --project src/GMAO.Persistence --startup-project src/GMAO.Presentation.Wpf 2>&1 | Select-String -Pattern \"Done|error|Build error|already exists|Applying|Writing\" | Select-Object -First 20)",
+      "PowerShell(dotnet test *)"
+    ]
+  }
+}

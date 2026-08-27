@@ -1,0 +1,169 @@
+﻿<UserControl
+    x:Class="GMAO.Presentation.Wpf.Views.RapportsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conv="clr-namespace:GMAO.Presentation.Wpf.Converters"
+    FontFamily="Segoe UI">
+    <UserControl.Resources>
+        <conv:EtatInterventionVersCouleurConverter x:Key="EtatCouleur" />
+        <conv:BoolVersVisibiliteConverter x:Key="BoolVisib" />
+        <conv:BoolInverseVersVisibiliteConverter x:Key="BoolVisibInv" />
+        <conv:StringVersVisibiliteConverter x:Key="StrVisib" />
+    </UserControl.Resources>
+
+    <Border
+        Margin="24"
+        Padding="8"
+        Background="White"
+        CornerRadius="12">
+        <Border.Effect>
+            <DropShadowEffect
+                BlurRadius="14"
+                Direction="270"
+                ShadowDepth="2"
+                Color="#22000000" />
+        </Border.Effect>
+        <DockPanel>
+            <Grid Margin="16,12,16,10" DockPanel.Dock="Top">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    FontWeight="SemiBold"
+                    Foreground="#203A43"
+                    Text="Rapports d'intervention (PDF)" />
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button
+                        Margin="0,0,8,0"
+                        Padding="12,6"
+                        Background="#2C5364"
+                        BorderThickness="0"
+                        Command="{Binding GenererCommand}"
+                        Cursor="Hand"
+                        Foreground="White">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                Margin="0,0,6,0"
+                                VerticalAlignment="Center"
+                                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                Text="&#xE7C3;" />
+                            <TextBlock VerticalAlignment="Center" Text="Générer / Régénérer" />
+                        </StackPanel>
+                    </Button>
+                    <Button
+                        Margin="0,0,8,0"
+                        Padding="12,6"
+                        Background="#455A64"
+                        BorderThickness="0"
+                        Command="{Binding OuvrirCommand}"
+                        Content="Ouvrir le PDF"
+                        Cursor="Hand"
+                        Foreground="White" />
+                    <Button
+                        Padding="12,6"
+                        Background="#ECEFF1"
+                        BorderThickness="0"
+                        Command="{Binding ChargerCommand}"
+                        Content="Actualiser"
+                        Cursor="Hand"
+                        Foreground="#37474F" />
+                </StackPanel>
+            </Grid>
+
+            <TextBlock
+                Margin="16,0,16,8"
+                DockPanel.Dock="Top"
+                Foreground="#0277BD"
+                Text="{Binding Message}"
+                TextWrapping="Wrap"
+                Visibility="{Binding Message, Converter={StaticResource StrVisib}}" />
+
+            <ListView
+                Margin="8,0,8,8"
+                BorderThickness="0"
+                ItemsSource="{Binding Rapports}"
+                SelectedItem="{Binding Selection, Mode=TwoWay}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="Padding" Value="6" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Margin="2"
+                            Padding="12"
+                            CornerRadius="8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0" Width="120">
+                                    <TextBlock
+                                        FontWeight="SemiBold"
+                                        Foreground="#263238"
+                                        Text="{Binding NumeroDI}" />
+                                    <TextBlock
+                                        FontSize="11"
+                                        Foreground="#90A4AE"
+                                        Text="{Binding Date, StringFormat=d}" />
+                                </StackPanel>
+
+                                <StackPanel
+                                    Grid.Column="1"
+                                    Margin="8,0"
+                                    VerticalAlignment="Center">
+                                    <TextBlock Foreground="#37474F" Text="{Binding ClientNom}" />
+                                    <TextBlock
+                                        FontSize="11"
+                                        Foreground="#90A4AE"
+                                        Text="{Binding AppareilSerie}" />
+                                </StackPanel>
+
+                                <Border
+                                    Grid.Column="2"
+                                    Margin="8,0"
+                                    Padding="9,3"
+                                    VerticalAlignment="Center"
+                                    Background="{Binding Etat, Converter={StaticResource EtatCouleur}}"
+                                    CornerRadius="10">
+                                    <TextBlock
+                                        FontSize="11"
+                                        FontWeight="SemiBold"
+                                        Foreground="White"
+                                        Text="{Binding EtatLibelle}" />
+                                </Border>
+
+                                <StackPanel
+                                    Grid.Column="3"
+                                    Width="150"
+                                    VerticalAlignment="Center">
+                                    <Border
+                                        Padding="8,3"
+                                        HorizontalAlignment="Left"
+                                        Background="#E8F5E9"
+                                        CornerRadius="9"
+                                        Visibility="{Binding ARapport, Converter={StaticResource BoolVisib}}">
+                                        <TextBlock FontSize="11" Foreground="#2E7D32">
+                                            <Run FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE73E;" /><Run Text=" PDF · " /><Run Text="{Binding DateGeneration, StringFormat=d, Mode=OneWay}" />
+                                        </TextBlock>
+                                    </Border>
+                                    <TextBlock
+                                        FontSize="11"
+                                        FontStyle="Italic"
+                                        Foreground="#B0BEC5"
+                                        Text="Aucun rapport"
+                                        Visibility="{Binding ARapport, Converter={StaticResource BoolVisibInv}}" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </DockPanel>
+    </Border>
+</UserControl>
