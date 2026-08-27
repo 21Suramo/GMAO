@@ -37,3 +37,5 @@ publish/
 
 # Raccourcis Windows (chemins absolus, spécifiques au poste)
 *.lnk
+
+.claude/settings.local.json
