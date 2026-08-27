@@ -11,6 +11,7 @@ using GMAO.Presentation.Wpf.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using Wpf.Ui.Appearance;
 
 namespace GMAO.Presentation.Wpf;
 
@@ -77,6 +78,10 @@ public partial class App : System.Windows.Application
     protected override async void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
+
+        // Thème Fluent sombre + backdrop Mica par défaut (WPF-UI)
+        ApplicationThemeManager.Apply(ApplicationTheme.Dark, global::Wpf.Ui.Controls.WindowBackdropType.Mica);
+
         await _host.StartAsync();
 
         try
