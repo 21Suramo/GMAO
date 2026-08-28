@@ -10,7 +10,9 @@
 
         <!--  Carte KPI moderne : accent coloré à gauche, ombre douce  -->
         <Style x:Key="CarteKpi" TargetType="Border">
-            <Setter Property="Background" Value="White" />
+            <Setter Property="Background" Value="{StaticResource PinceauSurfaceHud}" />
+            <Setter Property="BorderBrush" Value="{StaticResource PinceauSurfaceHudBordure}" />
+            <Setter Property="BorderThickness" Value="1" />
             <Setter Property="CornerRadius" Value="14" />
             <Setter Property="Padding" Value="18,16" />
             <Setter Property="Width" Value="205" />
@@ -28,7 +30,7 @@
         <Style x:Key="KpiValeur" TargetType="TextBlock">
             <Setter Property="FontSize" Value="30" />
             <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="Foreground" Value="#1B2A33" />
+            <Setter Property="Foreground" Value="{StaticResource PinceauTexteHud}" />
         </Style>
         <Style x:Key="KpiLibelle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="12.5" />
@@ -37,7 +39,9 @@
             <Setter Property="TextWrapping" Value="Wrap" />
         </Style>
         <Style x:Key="CartePanneau" TargetType="Border">
-            <Setter Property="Background" Value="White" />
+            <Setter Property="Background" Value="{StaticResource PinceauSurfaceHud}" />
+            <Setter Property="BorderBrush" Value="{StaticResource PinceauSurfaceHudBordure}" />
+            <Setter Property="BorderThickness" Value="1" />
             <Setter Property="CornerRadius" Value="14" />
             <Setter Property="Padding" Value="18" />
             <Setter Property="Effect">
@@ -53,7 +57,7 @@
         <Style x:Key="TitrePanneau" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="FontSize" Value="14" />
-            <Setter Property="Foreground" Value="#203A43" />
+            <Setter Property="Foreground" Value="{StaticResource PinceauTexteHud}" />
             <Setter Property="Margin" Value="0,0,0,12" />
         </Style>
 
@@ -86,7 +90,7 @@
                     VerticalAlignment="Center">
                     <TextBlock
                         FontSize="13"
-                        Foreground="#37474F"
+                        Foreground="{StaticResource PinceauTexteHud}"
                         Text="{Binding Libelle}"
                         TextTrimming="CharacterEllipsis" />
                     <Border
@@ -102,7 +106,7 @@
                     VerticalAlignment="Center"
                     FontSize="14"
                     FontWeight="Bold"
-                    Foreground="#203A43"
+                    Foreground="{StaticResource PinceauTexteHud}"
                     Text="{Binding Valeur}" />
             </Grid>
         </DataTemplate>
@@ -110,7 +114,7 @@
 
     <TabControl
         Padding="0"
-        Background="Transparent"
+        Background="{StaticResource PinceauFondHud}"
         BorderThickness="0">
         <!--  Vue « Live » : tableau de bord temps réel (contenu existant, inchangé)  -->
         <TabItem Header="Live">
@@ -282,7 +286,7 @@
                                 Margin="0,6,0,14"
                                 FontSize="15"
                                 FontWeight="SemiBold"
-                                Foreground="#203A43"
+                                Foreground="{StaticResource PinceauTexteHud}"
                                 Text="Parc &amp; disponibilité" />
                             <WrapPanel>
                                 <Border
@@ -444,7 +448,7 @@
                                                         VerticalAlignment="Center">
                                                         <TextBlock
                                                             FontSize="13"
-                                                            Foreground="#37474F"
+                                                            Foreground="{StaticResource PinceauTexteHud}"
                                                             Text="{Binding Libelle}"
                                                             TextTrimming="CharacterEllipsis" />
                                                         <Border
@@ -460,7 +464,7 @@
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
                                                         FontWeight="Bold"
-                                                        Foreground="#203A43"
+                                                        Foreground="{StaticResource PinceauTexteHud}"
                                                         Text="{Binding Pourcentage, StringFormat={}{0} %}" />
                                                 </Grid>
                                             </DataTemplate>

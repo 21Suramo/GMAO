@@ -48,6 +48,17 @@
     <SolidColorBrush x:Key="PinceauSucces" Color="{StaticResource CouleurSucces}" />
     <SolidColorBrush x:Key="PinceauInfo" Color="{StaticResource CouleurInfo}" />
 
+    <!--
+        ===== HUD médical : surfaces sombres translucides (Dashboard / Interventions) =====
+        Base #203A43/#16242B. Alpha élevé (0.92-0.95) : assez opaque pour la lisibilité du texte,
+        juste un soupçon de translucidité pour la profondeur. Texte clair obligatoire par-dessus.
+    -->
+    <SolidColorBrush x:Key="PinceauFondHud" Color="#F216242B" />
+    <SolidColorBrush x:Key="PinceauSurfaceHud" Color="#EB243A44" />
+    <SolidColorBrush x:Key="PinceauSurfaceHudBordure" Color="#334FC3F7" />
+    <SolidColorBrush x:Key="PinceauTexteHud" Color="#ECEFF1" />
+    <SolidColorBrush x:Key="PinceauTexteHudSecondaire" Color="#90A4AE" />
+
     <!--  Dégradé de marque (bandeaux / en-têtes), repris du gradient inline de LoginWindow  -->
     <LinearGradientBrush x:Key="PinceauDegradeMarque" StartPoint="0,0" EndPoint="1,1">
         <GradientStop Offset="0" Color="{StaticResource CouleurMarqueSombre}" />
