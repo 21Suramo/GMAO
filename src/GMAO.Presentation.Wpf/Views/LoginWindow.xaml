@@ -107,7 +107,7 @@
                 <TextBlock
                     Margin="0,16,0,0"
                     FontSize="13"
-                    Foreground="#D32F2F"
+                    Foreground="{StaticResource PinceauErreur}"
                     Text="{Binding MessageErreur}"
                     TextWrapping="Wrap"
                     Visibility="{Binding MessageErreur, Converter={StaticResource StrVisib}}" />

@@ -52,10 +52,21 @@ public partial class DashboardViewModel : ObservableObject
 
     [ObservableProperty] private PeriodeOption _periodeSelectionnee;
 
-    public DashboardViewModel(IServiceScopeFactory scopeFactory, ICurrentUserService currentUser)
+    /// <summary>
+    /// Onglet « Statistiques » du tableau de bord. Anciennement un module de navigation
+    /// distinct, il est désormais interne ; sa visibilité suit <see cref="VueGlobale"/>,
+    /// c'est-à-dire la permission ConsulterTableauBordGlobal qui le protégeait déjà.
+    /// </summary>
+    public StatistiquesViewModel Statistiques { get; }
+
+    public DashboardViewModel(
+        IServiceScopeFactory scopeFactory,
+        ICurrentUserService currentUser,
+        StatistiquesViewModel statistiques)
     {
         _scopeFactory = scopeFactory;
         _currentUser = currentUser;
+        Statistiques = statistiques;
         _periodeSelectionnee = Periodes[0];
         _ = ChargerAsync();
     }

@@ -108,7 +108,17 @@
         </DataTemplate>
     </UserControl.Resources>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <!--
+        Le module « Statistiques » est un onglet interne et non plus une entrée de navigation.
+        Sa visibilité reste liee a VueGlobale (permission ConsulterTableauBordGlobal), qui
+        conditionnait deja l'affichage de l'ancienne entree de menu.
+    -->
+    <TabControl
+        Background="Transparent"
+        BorderThickness="0"
+        Padding="0">
+        <TabItem Header="Vue d'ensemble">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="0,0,0,24">
             <!--  Bannière moderne  -->
             <Border Margin="0,0,0,22" Padding="28,22">
@@ -514,5 +524,12 @@
                 </Border>
             </StackPanel>
         </StackPanel>
-    </ScrollViewer>
+            </ScrollViewer>
+        </TabItem>
+
+        <TabItem Header="Statistiques" Visibility="{Binding VueGlobale, Converter={StaticResource BoolVisib}}">
+            <!--  Resolution VM -> Vue par le DataTemplate d'App.xaml (StatistiquesViewModel -> StatistiquesView)  -->
+            <ContentControl Content="{Binding Statistiques, Mode=OneWay}" />
+        </TabItem>
+    </TabControl>
 </UserControl>
