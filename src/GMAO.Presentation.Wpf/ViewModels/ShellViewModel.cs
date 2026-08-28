@@ -36,6 +36,12 @@ public partial class ShellViewModel : ObservableObject
     public string UtilisateurRole => _currentUser.Utilisateur?.RoleLibelle ?? string.Empty;
     public string Initiales => CalculerInitiales(UtilisateurNom);
 
+    /// <summary>Vrai quand la vue active adopte le thème HUD sombre (Dashboard / Interventions) :
+    /// l'en-tête contextuel bascule alors en fond sombre pour supprimer la couture visuelle.</summary>
+    public bool EnteteSombre =>
+        SelectedNav?.CibleViewModel == typeof(DashboardViewModel)
+        || SelectedNav?.CibleViewModel == typeof(InterventionsViewModel);
+
     public int NombreNotifications => Notifications.Count;
 
     /// <summary>Déclenché lorsque l'utilisateur demande à se déconnecter.</summary>
@@ -84,6 +90,7 @@ public partial class ShellViewModel : ObservableObject
 
     partial void OnSelectedNavChanged(NavItem? value)
     {
+        OnPropertyChanged(nameof(EnteteSombre));
         if (value is null) return;
         CurrentViewModel = (ObservableObject)_services.GetRequiredService(value.CibleViewModel);
     }

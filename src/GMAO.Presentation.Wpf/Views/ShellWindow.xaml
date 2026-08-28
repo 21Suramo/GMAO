@@ -138,16 +138,36 @@
             <Border
                 Grid.Row="0"
                 Padding="28,14"
-                Background="White"
                 BorderBrush="#E0E4E8"
                 BorderThickness="0,0,0,1">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="White" />
+                        <Style.Triggers>
+                            <!--  En-tête sombre quand la vue active est HUD (Dashboard / Interventions)  -->
+                            <DataTrigger Binding="{Binding EnteteSombre}" Value="True">
+                                <Setter Property="Background" Value="{StaticResource PinceauFondHud}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
                 <Grid>
                     <TextBlock
                         VerticalAlignment="Center"
                         FontSize="20"
                         FontWeight="SemiBold"
-                        Foreground="#203A43"
-                        Text="{Binding SelectedNav.Titre}" />
+                        Text="{Binding SelectedNav.Titre}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="#203A43" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding EnteteSombre}" Value="True">
+                                        <Setter Property="Foreground" Value="{StaticResource PinceauTexteHud}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
 
                     <!--  Cloche de notifications (décalée pour ne pas passer sous les boutons de fenêtre)  -->
                     <Grid
@@ -164,8 +184,18 @@
                             Content="&#xEA8F;"
                             Cursor="Hand"
                             FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
-                            FontSize="18"
-                            Foreground="#546E7A" />
+                            FontSize="18">
+                            <Button.Style>
+                                <Style BasedOn="{StaticResource BoutonBase}" TargetType="Button">
+                                    <Setter Property="Foreground" Value="#546E7A" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding EnteteSombre}" Value="True">
+                                            <Setter Property="Foreground" Value="{StaticResource PinceauTexteHudSecondaire}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
                         <Border
                             Height="18"
                             MinWidth="18"
