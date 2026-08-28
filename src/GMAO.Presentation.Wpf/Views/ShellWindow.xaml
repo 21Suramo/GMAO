@@ -44,22 +44,22 @@
     </local:FluentWindowBase.Resources>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="248" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-
-        <!--  Barre latérale  -->
-        <Border Grid.Column="0" Background="#1B2A33">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-                <!--  Logo  -->
-                <StackPanel Grid.Row="0" Margin="20,24,20,16">
+        <!--
+            Barre latérale : NavigationView WPF-UI (pleine largeur ; le pane s'affiche à gauche
+            et son frame de contenu vide, à droite, est recouvert par la zone de contenu ci-dessous).
+            Items peuplés en code-behind depuis ShellViewModel.MenuItems/FooterItems (RBAC déjà appliqué).
+        -->
+        <local:NavigationViewBase
+            x:Name="Nav"
+            Background="#1B2A33"
+            IsBackButtonVisible="Collapsed"
+            IsPaneOpen="True"
+            IsPaneToggleVisible="False"
+            OpenPaneLength="248"
+            PaneDisplayMode="Left"
+            Style="{StaticResource {x:Type ui:NavigationView}}">
+            <local:NavigationViewBase.PaneHeader>
+                <StackPanel Margin="20,24,20,16">
                     <TextBlock
                         FontSize="28"
                         FontWeight="Bold"
@@ -70,37 +70,10 @@
                         Foreground="#78909C"
                         Text="Datex-Ohmeda · MEDICANA" />
                 </StackPanel>
-
-                <!--  Menu  -->
-                <ListBox
-                    Grid.Row="1"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    ItemContainerStyle="{StaticResource NavItemStyle}"
-                    ItemsSource="{Binding MenuItems}"
-                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                    SelectedItem="{Binding SelectedNav, Mode=TwoWay}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock
-                                    Width="30"
-                                    VerticalAlignment="Center"
-                                    FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
-                                    FontSize="18"
-                                    Text="{Binding Icone}" />
-                                <TextBlock
-                                    VerticalAlignment="Center"
-                                    FontSize="14"
-                                    Text="{Binding Titre}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-
+            </local:NavigationViewBase.PaneHeader>
+            <local:NavigationViewBase.PaneFooter>
                 <!--  Profil + déconnexion  -->
                 <Border
-                    Grid.Row="2"
                     Padding="16,14"
                     BorderBrush="#2C3E48"
                     BorderThickness="0,1,0,0">
@@ -152,11 +125,11 @@
                             ToolTip="Se déconnecter" />
                     </Grid>
                 </Border>
-            </Grid>
-        </Border>
+            </local:NavigationViewBase.PaneFooter>
+        </local:NavigationViewBase>
 
-        <!--  Zone de contenu  -->
-        <Grid Grid.Column="1" Background="#F4F6F8">
+        <!--  Zone de contenu : superposée à droite du pane (largeur du pane = 248)  -->
+        <Grid Margin="248,0,0,0" Background="#F4F6F8">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -326,7 +299,6 @@
         -->
         <ui:TitleBar
             Title=""
-            Grid.ColumnSpan="2"
             Height="32"
             VerticalAlignment="Top"
             Background="Transparent" />

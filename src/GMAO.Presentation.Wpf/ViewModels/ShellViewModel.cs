@@ -26,7 +26,11 @@ public partial class ShellViewModel : ObservableObject
 
     public ObservableCollection<NotificationMessage> Notifications { get; } = new();
 
+    /// <summary>Items du pane principal (haut du NavigationView).</summary>
     public ObservableCollection<NavItem> MenuItems { get; }
+
+    /// <summary>Items du pied de pane (footer du NavigationView) : Paramètres.</summary>
+    public ObservableCollection<NavItem> FooterItems { get; }
 
     public string UtilisateurNom => _currentUser.Utilisateur?.NomComplet ?? "Utilisateur";
     public string UtilisateurRole => _currentUser.Utilisateur?.RoleLibelle ?? string.Empty;
@@ -49,23 +53,31 @@ public partial class ShellViewModel : ObservableObject
         // Les icônes sont des points de code de la police « Segoe Fluent Icons ».
         // Chaque entrée peut exiger une permission : la navigation est filtrée selon le rôle
         // (le contrôle d'accès réel reste fait action par action dans les services).
-        var tousLesItems = new[]
+        // Pane principal. « Statistiques » n'est plus un item : il est désormais accessible
+        // en onglet interne du Tableau de bord (vue « Analytique »).
+        var itemsPrincipaux = new[]
         {
             new NavItem("Tableau de bord", 0xE80F, typeof(DashboardViewModel), Permission.ConsulterTableauBord),
-            new NavItem("Statistiques", 0xE9D9, typeof(StatistiquesViewModel), Permission.ConsulterTableauBordGlobal),
-            new NavItem("Parc respirateurs", 0xE772, typeof(ParcViewModel), Permission.ConsulterParc),
             new NavItem("Interventions", 0xE90F, typeof(InterventionsViewModel), Permission.ConsulterInterventions),
+            new NavItem("Parc respirateurs", 0xE772, typeof(ParcViewModel), Permission.ConsulterParc),
             new NavItem("Pièces détachées", 0xE7B8, typeof(PiecesViewModel), Permission.ConsulterPieces),
             new NavItem("Rapports", 0xE9F9, typeof(RapportsViewModel), Permission.ConsulterInterventions),
-            new NavItem("Utilisateurs", 0xE716, typeof(UtilisateursViewModel), Permission.GererUtilisateurs),
+            new NavItem("Utilisateurs", 0xE716, typeof(UtilisateursViewModel), Permission.GererUtilisateurs)
+        };
+
+        // Footer du pane.
+        var itemsFooter = new[]
+        {
             new NavItem("Paramètres", 0xE713, typeof(ParametresViewModel))
         };
 
         var role = _currentUser.Utilisateur?.Role;
-        MenuItems = new ObservableCollection<NavItem>(
-            tousLesItems.Where(item =>
-                item.PermissionRequise is null
-                || (role is not null && MatricePermissions.Possede(role.Value, item.PermissionRequise.Value))));
+        bool EstAutorise(NavItem item) =>
+            item.PermissionRequise is null
+            || (role is not null && MatricePermissions.Possede(role.Value, item.PermissionRequise.Value));
+
+        MenuItems = new ObservableCollection<NavItem>(itemsPrincipaux.Where(EstAutorise));
+        FooterItems = new ObservableCollection<NavItem>(itemsFooter.Where(EstAutorise));
 
         SelectedNav = MenuItems.FirstOrDefault();
     }
@@ -74,6 +86,13 @@ public partial class ShellViewModel : ObservableObject
     {
         if (value is null) return;
         CurrentViewModel = (ObservableObject)_services.GetRequiredService(value.CibleViewModel);
+    }
+
+    /// <summary>Navigue vers l'item choisi dans le NavigationView (met à jour la vue courante).</summary>
+    [RelayCommand]
+    private void NaviguerVers(NavItem? item)
+    {
+        if (item is not null) SelectedNav = item;
     }
 
     [RelayCommand]

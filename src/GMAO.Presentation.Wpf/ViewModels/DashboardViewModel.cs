@@ -52,10 +52,17 @@ public partial class DashboardViewModel : ObservableObject
 
     [ObservableProperty] private PeriodeOption _periodeSelectionnee;
 
-    public DashboardViewModel(IServiceScopeFactory scopeFactory, ICurrentUserService currentUser)
+    /// <summary>
+    /// ViewModel des statistiques avancées, exposé comme onglet « Analytique » du tableau de bord
+    /// (l'accès a été fusionné ici ; la vue est résolue via le DataTemplate VM→View habituel).
+    /// </summary>
+    public StatistiquesViewModel Statistiques { get; }
+
+    public DashboardViewModel(IServiceScopeFactory scopeFactory, ICurrentUserService currentUser, StatistiquesViewModel statistiques)
     {
         _scopeFactory = scopeFactory;
         _currentUser = currentUser;
+        Statistiques = statistiques;
         _periodeSelectionnee = Periodes[0];
         _ = ChargerAsync();
     }
