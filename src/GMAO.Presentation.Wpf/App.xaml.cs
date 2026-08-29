@@ -33,7 +33,7 @@ public partial class App : System.Windows.Application
         {
             Log.Error(e.Exception, "Exception non gérée sur le thread UI");
             MessageBox.Show($"Une erreur inattendue s'est produite :\n\n{e.Exception.Message}",
-                "GMAO — Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                "MEDICANA — Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             e.Handled = true;
         };
 
@@ -95,7 +95,7 @@ public partial class App : System.Windows.Application
         {
             Log.Error(ex, "Échec de l'initialisation de la base de données");
             MessageBox.Show($"Erreur d'initialisation de la base :\n{ex.Message}",
-                "GMAO", MessageBoxButton.OK, MessageBoxImage.Error);
+                "MEDICANA", MessageBoxButton.OK, MessageBoxImage.Error);
             Shutdown();
             return;
         }

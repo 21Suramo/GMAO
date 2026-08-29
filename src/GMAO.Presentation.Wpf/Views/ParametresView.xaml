@@ -258,7 +258,7 @@
                             Grid.Row="0"
                             Grid.Column="1"
                             Style="{StaticResource Valeur}"
-                            Text="GMAO Datex-Ohmeda — MEDICANA" />
+                            Text="MEDICANA Datex-Ohmeda" />
                         <TextBlock
                             Grid.Row="1"
                             Grid.Column="0"

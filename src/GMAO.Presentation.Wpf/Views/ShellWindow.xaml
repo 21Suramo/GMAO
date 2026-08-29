@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:GMAO.Presentation.Wpf.Views"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-    Title="GMAO Datex-Ohmeda — MEDICANA"
+    Title="MEDICANA Datex-Ohmeda"
     Width="1180"
     Height="720"
     ExtendsContentIntoTitleBar="True"
@@ -86,14 +86,14 @@
                         BorderBrush="{StaticResource PinceauAccentVert}"
                         BorderThickness="1"
                         CornerRadius="8"
-                        ToolTip="GMAO — Datex-Ohmeda · MEDICANA">
+                        ToolTip="MEDICANA — Datex-Ohmeda">
                         <TextBlock
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             FontSize="18"
                             FontWeight="Bold"
                             Foreground="{StaticResource PinceauAccentVert}"
-                            Text="G" />
+                            Text="M" />
                     </Border>
                 </local:NavigationViewBase.PaneHeader>
                 <local:NavigationViewBase.PaneFooter>

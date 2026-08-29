@@ -192,6 +192,6 @@ public class RapportPdfGenerateur : IRapportPdfGenerateur
     }
 
     private void PiedDePage(Document doc)
-        => doc.Add(new Paragraph("Document généré automatiquement par l'application GMAO — MEDICANA / Datex-Ohmeda")
+        => doc.Add(new Paragraph("Document généré automatiquement par l'application MEDICANA / Datex-Ohmeda")
             .SetFontSize(8).SetFontColor(GrisTexte).SetTextAlignment(TextAlignment.CENTER).SetMarginTop(20));
 }
