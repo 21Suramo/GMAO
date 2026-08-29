@@ -14,9 +14,9 @@
         <conv:BoolInverseConverter x:Key="BoolInv" />
         <conv:BoolVersVisibiliteConverter x:Key="BoolVisib" />
         <LinearGradientBrush x:Key="Brand" StartPoint="0,0" EndPoint="1,1">
-            <GradientStop Offset="0" Color="#0F2027" />
-            <GradientStop Offset="0.5" Color="#203A43" />
-            <GradientStop Offset="1" Color="#2C5364" />
+            <GradientStop Offset="0" Color="#0A0E12" />
+            <GradientStop Offset="0.55" Color="#0F1A18" />
+            <GradientStop Offset="1" Color="#123B32" />
         </LinearGradientBrush>
     </Window.Resources>
 
@@ -28,11 +28,32 @@
 
         <!--  Panneau marque  -->
         <Grid Grid.Column="0" Background="{StaticResource Brand}">
+            <!--  Courbe de moniteur décorative en bas du panneau marque  -->
+            <Path
+                Height="120"
+                Margin="0,0,0,0"
+                VerticalAlignment="Bottom"
+                Style="{StaticResource CourbeMoniteur}" />
             <StackPanel Margin="48,0" VerticalAlignment="Center">
+                <StackPanel Margin="0,0,0,6" Orientation="Horizontal">
+                    <Ellipse
+                        Width="12"
+                        Height="12"
+                        Margin="0,0,12,0"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource PointStatutPulsant}" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontFamily="Cascadia Code, Consolas"
+                        FontSize="13"
+                        FontWeight="SemiBold"
+                        Foreground="{StaticResource PinceauAccentVert}"
+                        Text="SYSTÈME EN LIGNE" />
+                </StackPanel>
                 <TextBlock
                     FontSize="64"
                     FontWeight="Bold"
-                    Foreground="#4FC3F7"
+                    Foreground="#00E5A8"
                     Text="GMAO" />
                 <TextBlock
                     Margin="2,6,0,0"
@@ -62,12 +83,12 @@
         </Grid>
 
         <!--  Panneau formulaire  -->
-        <Border Grid.Column="1" Background="White">
+        <Border Grid.Column="1" Background="#12181F">
             <StackPanel Margin="44,0" VerticalAlignment="Center">
                 <TextBlock
                     FontSize="28"
                     FontWeight="SemiBold"
-                    Foreground="#203A43"
+                    Foreground="#ECEFF1"
                     Text="Connexion" />
                 <TextBlock
                     Margin="0,4,0,28"
@@ -78,31 +99,37 @@
                 <TextBlock
                     Margin="0,0,0,6"
                     FontSize="13"
-                    Foreground="#455A64"
+                    Foreground="#90A4AE"
                     Text="Identifiant" />
                 <TextBox
                     x:Name="ChampLogin"
                     Height="42"
                     Padding="10,0"
                     VerticalContentAlignment="Center"
-                    BorderBrush="#CFD8DC"
+                    Background="#0E141B"
+                    BorderBrush="#2E3A44"
                     BorderThickness="1"
+                    CaretBrush="#00E5A8"
                     FontSize="15"
+                    Foreground="#ECEFF1"
                     Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}" />
 
                 <TextBlock
                     Margin="0,18,0,6"
                     FontSize="13"
-                    Foreground="#455A64"
+                    Foreground="#90A4AE"
                     Text="Mot de passe" />
                 <PasswordBox
                     x:Name="ChampMotDePasse"
                     Height="42"
                     Padding="10,0"
                     VerticalContentAlignment="Center"
-                    BorderBrush="#CFD8DC"
+                    Background="#0E141B"
+                    BorderBrush="#2E3A44"
                     BorderThickness="1"
-                    FontSize="15" />
+                    CaretBrush="#00E5A8"
+                    FontSize="15"
+                    Foreground="#ECEFF1" />
 
                 <TextBlock
                     Margin="0,16,0,0"
@@ -122,10 +149,10 @@
                     Cursor="Hand"
                     FontSize="15"
                     FontWeight="SemiBold"
-                    Foreground="White"
+                    Foreground="#0A0E12"
                     IsEnabled="{Binding EnCours, Converter={StaticResource BoolInv}}">
                     <Button.Background>
-                        <SolidColorBrush Color="#2C5364" />
+                        <SolidColorBrush Color="#00E5A8" />
                     </Button.Background>
                 </Button>
 
@@ -140,9 +167,9 @@
                 <TextBlock
                     Margin="0,28,0,0"
                     HorizontalAlignment="Center"
+                    FontFamily="Cascadia Code, Consolas"
                     FontSize="12"
-                    FontStyle="Italic"
-                    Foreground="#B0BEC5"
+                    Foreground="#90A4AE"
                     Text="Compte par défaut : admin / Admin@123" />
             </StackPanel>
         </Border>
