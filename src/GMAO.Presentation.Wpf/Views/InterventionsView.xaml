@@ -25,7 +25,7 @@
             Grid.Column="0"
             Padding="6"
             Background="{StaticResource PinceauSurfaceHud}"
-            CornerRadius="12">
+            CornerRadius="6">
             <Border.Effect>
                 <DropShadowEffect
                     BlurRadius="14"
@@ -43,12 +43,13 @@
                     <Button
                         Padding="12,5"
                         HorizontalAlignment="Right"
-                        Background="#2C5364"
+                        Background="#00E5A8"
                         BorderThickness="0"
                         Command="{Binding BasculerCreationCommand}"
                         Content="+ Nouvelle DI"
                         Cursor="Hand"
-                        Foreground="White" />
+                        FontWeight="SemiBold"
+                        Foreground="#0A0E12" />
                 </Grid>
 
                 <!--
@@ -69,7 +70,7 @@
                                 Background="#14FFFFFF"
                                 BorderBrush="{StaticResource PinceauSeparateurHud}"
                                 BorderThickness="1"
-                                CornerRadius="10">
+                                CornerRadius="6">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="4" />
@@ -85,6 +86,7 @@
                                     <StackPanel Grid.Column="1" Margin="12,9">
                                         <Grid>
                                             <TextBlock
+                                                FontFamily="Cascadia Code, Consolas"
                                                 FontWeight="SemiBold"
                                                 Foreground="{StaticResource PinceauTexteHud}"
                                                 Text="{Binding NumeroDI}" />
@@ -139,7 +141,7 @@
             Grid.Column="2"
             Padding="22"
             Background="{StaticResource PinceauSurfaceHud}"
-            CornerRadius="12"
+            CornerRadius="6"
             Visibility="{Binding Detail, Converter={StaticResource NullVisib}}">
             <Border.Effect>
                 <DropShadowEffect
@@ -153,6 +155,7 @@
                     <Grid>
                         <StackPanel>
                             <TextBlock
+                                FontFamily="Cascadia Code, Consolas"
                                 FontSize="22"
                                 FontWeight="Bold"
                                 Foreground="{StaticResource PinceauTexteHud}"
@@ -179,16 +182,28 @@
                     <!--  Bandeau critique  -->
                     <Border
                         Margin="0,14,0,0"
-                        Padding="12"
-                        Background="#FFEBEE"
-                        CornerRadius="8"
+                        Padding="12,10"
+                        Background="#22FF3B30"
+                        BorderBrush="#FF3B30"
+                        BorderThickness="1"
+                        CornerRadius="5"
                         Visibility="{Binding Detail.PatientConnecte, Converter={StaticResource BoolVisib}}">
-                        <TextBlock
-                            FontWeight="SemiBold"
-                            Foreground="#C62828"
-                            TextWrapping="Wrap">
-                            <Run FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7BA;" /><Run Text=" PATIENT CONNECTÉ — intervention critique, priorité maximale" />
-                        </TextBlock>
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse
+                                Width="10"
+                                Height="10"
+                                Margin="0,0,10,0"
+                                VerticalAlignment="Center"
+                                Fill="#FF3B30"
+                                Style="{StaticResource PointStatutPulsant}" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontWeight="SemiBold"
+                                Foreground="#FFB3AE"
+                                TextWrapping="Wrap">
+                                <Run FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7BA;" /><Run Text=" PATIENT CONNECTÉ — intervention critique, priorité maximale" />
+                            </TextBlock>
+                        </StackPanel>
                     </Border>
 
                     <!--  Fiche  -->
@@ -265,11 +280,12 @@
                         <Button
                             Margin="0,0,8,8"
                             Padding="12,7"
-                            Background="#2C5364"
+                            Background="#00E5A8"
                             BorderThickness="0"
                             Command="{Binding AvancerCommand}"
                             Cursor="Hand"
-                            Foreground="White">
+                            FontWeight="SemiBold"
+                            Foreground="#0A0E12">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock VerticalAlignment="Center" Text="Avancer l'étape" />
                                 <TextBlock
@@ -282,7 +298,7 @@
                         <Button
                             Margin="0,0,8,8"
                             Padding="12,7"
-                            Background="#EF6C00"
+                            Background="#FFB300"
                             BorderThickness="0"
                             Command="{Binding MettreEnAttentePieceCommand}"
                             Content="En attente pièce"
@@ -291,11 +307,12 @@
                         <Button
                             Margin="0,0,8,8"
                             Padding="12,7"
-                            Background="#2E7D32"
+                            Background="#00E676"
                             BorderThickness="0"
                             Command="{Binding CloturerCommand}"
                             Cursor="Hand"
-                            Foreground="White">
+                            FontWeight="SemiBold"
+                            Foreground="#0A0E12">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock VerticalAlignment="Center" Text="Clôturer" />
                                 <TextBlock
@@ -334,7 +351,7 @@
                     <Border
                         Padding="14"
                         Background="{StaticResource PinceauFondHud}"
-                        CornerRadius="10">
+                        CornerRadius="6">
                         <StackPanel>
                             <CheckBox
                                 Margin="0,3"
@@ -400,7 +417,7 @@
                                         Width="8"
                                         Height="8"
                                         VerticalAlignment="Center"
-                                        Fill="#4FC3F7" />
+                                        Fill="#00E5A8" />
                                     <TextBlock
                                         Grid.Column="1"
                                         Margin="10,0,0,0"
@@ -415,7 +432,7 @@
 
                     <TextBlock
                         Margin="0,14,0,0"
-                        Foreground="#0277BD"
+                        Foreground="#29B6F6"
                         Text="{Binding Message}"
                         TextWrapping="Wrap"
                         Visibility="{Binding Message, Converter={StaticResource StrVisib}}" />
@@ -437,7 +454,7 @@
             Background="{StaticResource PinceauSurfaceHud}"
             BorderBrush="{StaticResource PinceauSurfaceHudBordure}"
             BorderThickness="1,0,0,0"
-            CornerRadius="12,0,0,12"
+            CornerRadius="6,0,0,6"
             Visibility="{Binding CreationVisible, Converter={StaticResource BoolVisib}}">
             <Border.Effect>
                 <DropShadowEffect
@@ -522,12 +539,13 @@
                     <Button
                         Padding="14,7"
                         HorizontalAlignment="Left"
-                        Background="#2E7D32"
+                        Background="#00E676"
                         BorderThickness="0"
                         Command="{Binding CreerCommand}"
                         Content="Créer la DI"
                         Cursor="Hand"
-                        Foreground="White" />
+                        FontWeight="SemiBold"
+                        Foreground="#0A0E12" />
                     <TextBlock
                         Margin="0,8,0,0"
                         Foreground="#FF8A80"
