@@ -100,12 +100,11 @@
             </DockPanel>
         </Border>
 
-        <!--  Fiche de vie + QR  -->
+        <!--  Fiche de vie + QR : carte « moniteur clinique »  -->
         <Border
             Grid.Column="2"
             Padding="22"
-            Background="{StaticResource PinceauSurfaceHud}"
-            CornerRadius="6"
+            Style="{StaticResource CardMoniteur}"
             Visibility="{Binding Selection, Converter={StaticResource NullVisib}}">
             <Border.Effect>
                 <DropShadowEffect
@@ -303,12 +302,12 @@
                             Foreground="White" />
                     </StackPanel>
 
-                    <!--  Bloc hors service actif  -->
+                    <!--  Bloc hors service actif : carte d'alerte distincte (bordure PinceauErreur)  -->
                     <StackPanel Visibility="{Binding EstHorsService, Converter={StaticResource BoolVisib}}">
                         <Border
                             Padding="14"
                             Background="#22FF3B30"
-                            BorderBrush="#FF3B30"
+                            BorderBrush="{StaticResource PinceauErreur}"
                             BorderThickness="1"
                             CornerRadius="5">
                             <StackPanel>
