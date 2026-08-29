@@ -121,4 +121,41 @@
         <Setter Property="FontSize" Value="13" />
     </Style>
 
+    <!--
+        Ligne de tableau sombre (HUD) : zébrage, séparateur, survol, sélection nette.
+        À utiliser avec ListView AlternationCount="2" + Background transparent sur fond sombre.
+    -->
+    <Style x:Key="LigneTableHud" TargetType="ListViewItem">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="{StaticResource PinceauTexteHud}" />
+        <Setter Property="Padding" Value="8,8" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <Border
+                        x:Name="Bord"
+                        Padding="{TemplateBinding Padding}"
+                        Background="Transparent"
+                        BorderBrush="{StaticResource PinceauSeparateurHud}"
+                        BorderThickness="0,0,0,1">
+                        <ContentPresenter VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                            <Setter TargetName="Bord" Property="Background" Value="{StaticResource PinceauLigneImpaireHud}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bord" Property="Background" Value="{StaticResource PinceauSurvolHud}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Bord" Property="Background" Value="{StaticResource PinceauSelectionHud}" />
+                            <Setter TargetName="Bord" Property="BorderBrush" Value="{StaticResource PinceauAccent}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:conv="clr-namespace:GMAO.Presentation.Wpf.Converters"
+    Background="{StaticResource PinceauFondHud}"
     FontFamily="Segoe UI">
     <UserControl.Resources>
         <conv:EtatRespirateurVersCouleurConverter x:Key="EtatCouleur" />
@@ -23,7 +24,7 @@
         <Border
             Grid.Column="0"
             Padding="6"
-            Background="White"
+            Background="{StaticResource PinceauSurfaceHud}"
             CornerRadius="12">
             <Border.Effect>
                 <DropShadowEffect
@@ -37,29 +38,26 @@
                     <TextBlock
                         FontSize="16"
                         FontWeight="SemiBold"
-                        Foreground="#203A43"
+                        Foreground="{StaticResource PinceauTexteHud}"
                         Text="Respirateurs du parc" />
                     <Button
                         Padding="10,4"
                         HorizontalAlignment="Right"
-                        Background="#ECEFF1"
+                        Background="{StaticResource PinceauChipHud}"
                         BorderThickness="0"
                         Command="{Binding ChargerCommand}"
                         Content="Actualiser"
                         Cursor="Hand"
-                        Foreground="#37474F" />
+                        Foreground="{StaticResource PinceauTexteHud}" />
                 </Grid>
                 <ListView
+                    AlternationCount="2"
+                    Background="Transparent"
                     BorderThickness="0"
+                    ItemContainerStyle="{StaticResource LigneTableHud}"
                     ItemsSource="{Binding Respirateurs}"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     SelectedItem="{Binding Selection, Mode=TwoWay}">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                            <Setter Property="Padding" Value="6" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Border
@@ -75,7 +73,7 @@
                                         <TextBlock
                                             FontSize="14"
                                             FontWeight="SemiBold"
-                                            Foreground="#263238"
+                                            Foreground="{StaticResource PinceauTexteHud}"
                                             Text="{Binding NumeroSerie}" />
                                         <TextBlock FontSize="12" Foreground="#78909C">
                                             <Run Text="{Binding ModeleNom}" /><Run Text=" · " /><Run Text="{Binding Localisation}" />
@@ -105,7 +103,7 @@
         <Border
             Grid.Column="2"
             Padding="22"
-            Background="White"
+            Background="{StaticResource PinceauSurfaceHud}"
             CornerRadius="12"
             Visibility="{Binding Selection, Converter={StaticResource NullVisib}}">
             <Border.Effect>
@@ -120,7 +118,7 @@
                     <TextBlock
                         FontSize="22"
                         FontWeight="Bold"
-                        Foreground="#203A43"
+                        Foreground="{StaticResource PinceauTexteHud}"
                         Text="{Binding NumeroSerie}" />
                     <Border
                         Margin="0,8,0,0"
@@ -140,7 +138,7 @@
                         Margin="0,18,0,0"
                         Padding="16"
                         HorizontalAlignment="Center"
-                        Background="#F4F6F8"
+                        Background="{StaticResource PinceauFondHud}"
                         CornerRadius="10">
                         <StackPanel>
                             <Image
@@ -188,7 +186,7 @@
                                 Grid.Row="0"
                                 Grid.Column="1"
                                 Margin="12,3"
-                                Foreground="#37474F"
+                                Foreground="{StaticResource PinceauTexteHud}"
                                 Text="{Binding CodeInterne}" />
                             <TextBlock
                                 Grid.Row="1"
@@ -200,7 +198,7 @@
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 Margin="12,3"
-                                Foreground="#37474F">
+                                Foreground="{StaticResource PinceauTexteHud}">
                                 <Run Text="{Binding ModeleNom}" /><Run Text=" (" /><Run Text="{Binding ModeleGamme}" /><Run Text=")" />
                             </TextBlock>
                             <TextBlock
@@ -213,7 +211,7 @@
                                 Grid.Row="2"
                                 Grid.Column="1"
                                 Margin="12,3"
-                                Foreground="#37474F">
+                                Foreground="{StaticResource PinceauTexteHud}">
                                 <Run Text="Logiciel " /><Run Text="{Binding VersionLogicielle}" /><Run Text="  ·  Matériel " /><Run Text="{Binding VersionMaterielle}" />
                             </TextBlock>
                             <TextBlock
@@ -226,7 +224,7 @@
                                 Grid.Row="3"
                                 Grid.Column="1"
                                 Margin="12,3"
-                                Foreground="#37474F"
+                                Foreground="{StaticResource PinceauTexteHud}"
                                 Text="{Binding Localisation}"
                                 TextWrapping="Wrap" />
                             <TextBlock
@@ -239,7 +237,7 @@
                                 Grid.Row="4"
                                 Grid.Column="1"
                                 Margin="12,3"
-                                Foreground="#37474F"
+                                Foreground="{StaticResource PinceauTexteHud}"
                                 Text="{Binding DateMiseEnService, StringFormat=d}" />
                             <TextBlock
                                 Grid.Row="5"
@@ -251,7 +249,7 @@
                                 Grid.Row="5"
                                 Grid.Column="1"
                                 Margin="12,3"
-                                Foreground="#37474F"
+                                Foreground="{StaticResource PinceauTexteHud}"
                                 Text="{Binding NumeroContrat, TargetNullValue=Aucun}" />
                             <TextBlock
                                 Grid.Row="6"
@@ -263,7 +261,7 @@
                                 Grid.Row="6"
                                 Grid.Column="1"
                                 Margin="12,3"
-                                Foreground="#37474F"
+                                Foreground="{StaticResource PinceauTexteHud}"
                                 Text="{Binding DateFinGarantie, StringFormat=d, TargetNullValue=N/A}" />
                         </Grid>
                     </StackPanel>
@@ -271,7 +269,7 @@
                     <Border
                         Height="1"
                         Margin="0,18"
-                        Background="#ECEFF1" />
+                        Background="{StaticResource PinceauChipHud}" />
 
                     <!--  Actions hors service  -->
                     <StackPanel Visibility="{Binding EstHorsService, Converter={StaticResource BoolVisibInv}}">

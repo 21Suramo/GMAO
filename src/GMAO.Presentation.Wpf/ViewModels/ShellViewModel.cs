@@ -36,11 +36,17 @@ public partial class ShellViewModel : ObservableObject
     public string UtilisateurRole => _currentUser.Utilisateur?.RoleLibelle ?? string.Empty;
     public string Initiales => CalculerInitiales(UtilisateurNom);
 
-    /// <summary>Vrai quand la vue active adopte le thème HUD sombre (Dashboard / Interventions) :
-    /// l'en-tête contextuel bascule alors en fond sombre pour supprimer la couture visuelle.</summary>
-    public bool EnteteSombre =>
-        SelectedNav?.CibleViewModel == typeof(DashboardViewModel)
-        || SelectedNav?.CibleViewModel == typeof(InterventionsViewModel);
+    /// <summary>Modules adoptant le thème HUD sombre (désormais tous les modules).</summary>
+    private static readonly Type[] VmSombres =
+    {
+        typeof(DashboardViewModel), typeof(InterventionsViewModel), typeof(ParcViewModel),
+        typeof(RapportsViewModel), typeof(ParametresViewModel), typeof(PiecesViewModel),
+        typeof(UtilisateursViewModel)
+    };
+
+    /// <summary>Vrai quand la vue active adopte le thème HUD sombre : l'en-tête contextuel
+    /// bascule alors en fond sombre pour supprimer la couture visuelle.</summary>
+    public bool EnteteSombre => SelectedNav is not null && VmSombres.Contains(SelectedNav.CibleViewModel);
 
     public int NombreNotifications => Notifications.Count;
 

@@ -59,6 +59,13 @@
     <SolidColorBrush x:Key="PinceauTexteHud" Color="#ECEFF1" />
     <SolidColorBrush x:Key="PinceauTexteHudSecondaire" Color="#90A4AE" />
 
+    <!--  Puce/chip neutre + éléments de tableau sombre (zébrage, survol, sélection, séparateur)  -->
+    <SolidColorBrush x:Key="PinceauChipHud" Color="#24FFFFFF" />
+    <SolidColorBrush x:Key="PinceauLigneImpaireHud" Color="#20FFFFFF" />
+    <SolidColorBrush x:Key="PinceauSurvolHud" Color="#1F4FC3F7" />
+    <SolidColorBrush x:Key="PinceauSelectionHud" Color="#404FC3F7" />
+    <SolidColorBrush x:Key="PinceauSeparateurHud" Color="#33FFFFFF" />
+
     <!--  Dégradé de marque (bandeaux / en-têtes), repris du gradient inline de LoginWindow  -->
     <LinearGradientBrush x:Key="PinceauDegradeMarque" StartPoint="0,0" EndPoint="1,1">
         <GradientStop Offset="0" Color="{StaticResource CouleurMarqueSombre}" />
