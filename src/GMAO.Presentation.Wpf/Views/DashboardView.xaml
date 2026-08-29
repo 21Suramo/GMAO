@@ -8,12 +8,12 @@
     <UserControl.Resources>
         <conv:BoolVersVisibiliteConverter x:Key="BoolVisib" />
 
-        <!--  Carte KPI moderne : accent coloré à gauche, ombre douce  -->
+        <!--  Carte KPI « moniteur » : coins peu arrondis, liseré d'état en bas, fond surface HUD  -->
         <Style x:Key="CarteKpi" TargetType="Border">
             <Setter Property="Background" Value="{StaticResource PinceauSurfaceHud}" />
             <Setter Property="BorderBrush" Value="{StaticResource PinceauSurfaceHudBordure}" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="14" />
+            <Setter Property="CornerRadius" Value="5" />
             <Setter Property="Padding" Value="18,16" />
             <Setter Property="Width" Value="205" />
             <Setter Property="Margin" Value="0,0,16,16" />
@@ -23,11 +23,13 @@
                         BlurRadius="16"
                         Direction="270"
                         ShadowDepth="3"
-                        Color="#1E000000" />
+                        Color="#40000000" />
                 </Setter.Value>
             </Setter>
         </Style>
+        <!--  Valeur KPI en police technique monospace (lecture « appareil »)  -->
         <Style x:Key="KpiValeur" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Cascadia Code, Consolas, Courier New" />
             <Setter Property="FontSize" Value="30" />
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Foreground" Value="{StaticResource PinceauTexteHud}" />
@@ -42,7 +44,7 @@
             <Setter Property="Background" Value="{StaticResource PinceauSurfaceHud}" />
             <Setter Property="BorderBrush" Value="{StaticResource PinceauSurfaceHudBordure}" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="14" />
+            <Setter Property="CornerRadius" Value="6" />
             <Setter Property="Padding" Value="18" />
             <Setter Property="Effect">
                 <Setter.Value>
@@ -98,7 +100,7 @@
                         Height="6"
                         Margin="0,4,0,0"
                         HorizontalAlignment="Left"
-                        Background="#4FC3F7"
+                        Background="#00E5A8"
                         CornerRadius="3" />
                 </StackPanel>
                 <TextBlock
@@ -120,32 +122,57 @@
         <TabItem Header="Live">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="0,0,0,24">
-                    <!--  Bannière moderne  -->
-                    <Border Margin="0,0,0,22" Padding="28,22">
-                        <Border.Background>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                <GradientStop Offset="0" Color="#203A43" />
-                                <GradientStop Offset="1" Color="#2C5364" />
-                            </LinearGradientBrush>
-                        </Border.Background>
+                    <!--  Bandeau « moniteur » : fond sombre, liseré vert, courbe ECG décorative + pastille LIVE pulsante  -->
+                    <Border
+                        Margin="0,0,0,22"
+                        Padding="28,22"
+                        Background="{StaticResource PinceauSurfaceHud}"
+                        BorderBrush="{StaticResource PinceauAccentVert}"
+                        BorderThickness="0,0,0,1"
+                        CornerRadius="5">
                         <Grid>
+                            <!--  Courbe de moniteur décorative, alignée en bas, faible opacité  -->
+                            <Path
+                                Height="48"
+                                Margin="0,0,0,-10"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Bottom"
+                                Style="{StaticResource CourbeMoniteur}" />
                             <StackPanel VerticalAlignment="Center">
-                                <TextBlock
-                                    FontSize="22"
-                                    FontWeight="Bold"
-                                    Foreground="White"
-                                    Text="Tableau de bord" />
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse
+                                        Width="9"
+                                        Height="9"
+                                        Margin="0,0,8,0"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource PointStatutPulsant}" />
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontFamily="Cascadia Code, Consolas"
+                                        FontSize="11"
+                                        FontWeight="SemiBold"
+                                        Foreground="{StaticResource PinceauAccentVert}"
+                                        Text="LIVE" />
+                                    <TextBlock
+                                        Margin="10,0,0,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="22"
+                                        FontWeight="Bold"
+                                        Foreground="{StaticResource PinceauTexteHud}"
+                                        Text="Tableau de bord" />
+                                </StackPanel>
                                 <StackPanel Margin="0,4,0,0" Orientation="Horizontal">
                                     <TextBlock
                                         FontSize="13"
                                         FontWeight="SemiBold"
-                                        Foreground="#B3E5FC"
+                                        Foreground="{StaticResource PinceauAccentVert}"
                                         Text="{Binding Kpi.PerimetreLibelle}" />
                                     <TextBlock
                                         FontSize="13"
                                         Foreground="#78909C"
                                         Text="  ·  " />
                                     <TextBlock
+                                        FontFamily="Cascadia Code, Consolas"
                                         FontSize="13"
                                         Foreground="#CFD8DC"
                                         Text="{Binding Kpi.PeriodeLibelle}" />
@@ -183,96 +210,96 @@
                         <!--  KPI de flux et de performance  -->
                         <WrapPanel>
                             <Border
-                                BorderBrush="#F9A825"
+                                BorderBrush="#FFB300"
                                 BorderThickness="0,0,0,4"
                                 Style="{StaticResource CarteKpi}">
                                 <StackPanel>
                                     <TextBlock
-                                        Foreground="#F9A825"
+                                        Foreground="#FFB300"
                                         Style="{StaticResource KpiValeur}"
                                         Text="{Binding Kpi.InterventionsActives}" />
                                     <TextBlock Style="{StaticResource KpiLibelle}" Text="Interventions actives" />
                                 </StackPanel>
                             </Border>
                             <Border
-                                BorderBrush="#E53935"
+                                BorderBrush="#FF3B30"
                                 BorderThickness="0,0,0,4"
                                 Style="{StaticResource CarteKpi}">
                                 <StackPanel>
                                     <TextBlock
-                                        Foreground="#E53935"
+                                        Foreground="#FF3B30"
                                         Style="{StaticResource KpiValeur}"
                                         Text="{Binding Kpi.PannesAujourdhui}" />
                                     <TextBlock Style="{StaticResource KpiLibelle}" Text="Pannes déclarées aujourd'hui" />
                                 </StackPanel>
                             </Border>
                             <Border
-                                BorderBrush="#C62828"
+                                BorderBrush="#FF3B30"
                                 BorderThickness="0,0,0,4"
                                 Style="{StaticResource CarteKpi}">
                                 <StackPanel>
                                     <TextBlock
-                                        Foreground="#C62828"
+                                        Foreground="#FF3B30"
                                         Style="{StaticResource KpiValeur}"
                                         Text="{Binding Kpi.InterventionsUrgentes}" />
                                     <TextBlock Style="{StaticResource KpiLibelle}" Text="Interventions urgentes" />
                                 </StackPanel>
                             </Border>
                             <Border
-                                BorderBrush="#D84315"
+                                BorderBrush="#FF3B30"
                                 BorderThickness="0,0,0,4"
                                 Style="{StaticResource CarteKpi}">
                                 <StackPanel>
                                     <TextBlock
-                                        Foreground="#D84315"
+                                        Foreground="#FF3B30"
                                         Style="{StaticResource KpiValeur}"
                                         Text="{Binding Kpi.EnDepassementSla}" />
                                     <TextBlock Style="{StaticResource KpiLibelle}" Text="En dépassement de délai (SLA)" />
                                 </StackPanel>
                             </Border>
                             <Border
-                                BorderBrush="#00838F"
+                                BorderBrush="#29B6F6"
                                 BorderThickness="0,0,0,4"
                                 Style="{StaticResource CarteKpi}">
                                 <StackPanel>
                                     <TextBlock
-                                        Foreground="#00838F"
+                                        Foreground="#29B6F6"
                                         Style="{StaticResource KpiValeur}"
                                         Text="{Binding Kpi.MttrHeures, StringFormat={}{0} h}" />
                                     <TextBlock Style="{StaticResource KpiLibelle}" Text="Temps moyen de résolution (MTTR)" />
                                 </StackPanel>
                             </Border>
                             <Border
-                                BorderBrush="#6A1B9A"
+                                BorderBrush="#29B6F6"
                                 BorderThickness="0,0,0,4"
                                 Style="{StaticResource CarteKpi}">
                                 <StackPanel>
                                     <TextBlock
-                                        Foreground="#6A1B9A"
+                                        Foreground="#29B6F6"
                                         Style="{StaticResource KpiValeur}"
                                         Text="{Binding Kpi.DelaiMoyenAffectationHeures, StringFormat={}{0} h}" />
                                     <TextBlock Style="{StaticResource KpiLibelle}" Text="Délai moyen d'affectation" />
                                 </StackPanel>
                             </Border>
                             <Border
-                                BorderBrush="#2E7D32"
+                                BorderBrush="#00E676"
                                 BorderThickness="0,0,0,4"
                                 Style="{StaticResource CarteKpi}">
                                 <StackPanel>
                                     <TextBlock
-                                        Foreground="#2E7D32"
+                                        Foreground="#00E676"
                                         Style="{StaticResource KpiValeur}"
                                         Text="{Binding Kpi.InterventionsCloturees}" />
                                     <TextBlock Style="{StaticResource KpiLibelle}" Text="Clôturées sur la période" />
                                 </StackPanel>
                             </Border>
                             <Border
-                                BorderBrush="#455A64"
+                                BorderBrush="#90A4AE"
                                 BorderThickness="0,0,0,4"
                                 Style="{StaticResource CarteKpi}">
                                 <StackPanel>
                                     <TextBlock
-                                        Foreground="#455A64"
+                                        Foreground="#90A4AE"
                                         Style="{StaticResource KpiValeur}"
                                         Text="{Binding Kpi.CoutCumule, StringFormat={}{0:N0} MAD}" />
                                     <TextBlock Style="{StaticResource KpiLibelle}" Text="Coût cumulé (période)" />
@@ -290,19 +317,19 @@
                                 Text="Parc &amp; disponibilité" />
                             <WrapPanel>
                                 <Border
-                                    BorderBrush="#0277BD"
+                                    BorderBrush="#29B6F6"
                                     BorderThickness="0,0,0,4"
                                     Style="{StaticResource CarteKpi}">
                                     <StackPanel>
                                         <TextBlock
-                                            Foreground="#0277BD"
+                                            Foreground="#29B6F6"
                                             Style="{StaticResource KpiValeur}"
                                             Text="{Binding Kpi.DisponibiliteGlobale, StringFormat={}{0} %}" />
                                         <TextBlock Style="{StaticResource KpiLibelle}" Text="Disponibilité des respirateurs" />
                                     </StackPanel>
                                 </Border>
                                 <Border
-                                    BorderBrush="#455A64"
+                                    BorderBrush="#90A4AE"
                                     BorderThickness="0,0,0,4"
                                     Style="{StaticResource CarteKpi}">
                                     <StackPanel>
@@ -311,36 +338,36 @@
                                     </StackPanel>
                                 </Border>
                                 <Border
-                                    BorderBrush="#2E7D32"
+                                    BorderBrush="#00E676"
                                     BorderThickness="0,0,0,4"
                                     Style="{StaticResource CarteKpi}">
                                     <StackPanel>
                                         <TextBlock
-                                            Foreground="#2E7D32"
+                                            Foreground="#00E676"
                                             Style="{StaticResource KpiValeur}"
                                             Text="{Binding Kpi.RespirateursEnService}" />
                                         <TextBlock Style="{StaticResource KpiLibelle}" Text="En service" />
                                     </StackPanel>
                                 </Border>
                                 <Border
-                                    BorderBrush="#C62828"
+                                    BorderBrush="#FF3B30"
                                     BorderThickness="0,0,0,4"
                                     Style="{StaticResource CarteKpi}">
                                     <StackPanel>
                                         <TextBlock
-                                            Foreground="#C62828"
+                                            Foreground="#FF3B30"
                                             Style="{StaticResource KpiValeur}"
                                             Text="{Binding Kpi.RespirateursHorsService}" />
                                         <TextBlock Style="{StaticResource KpiLibelle}" Text="Hors service" />
                                     </StackPanel>
                                 </Border>
                                 <Border
-                                    BorderBrush="#EF6C00"
+                                    BorderBrush="#FFB300"
                                     BorderThickness="0,0,0,4"
                                     Style="{StaticResource CarteKpi}">
                                     <StackPanel>
                                         <TextBlock
-                                            Foreground="#EF6C00"
+                                            Foreground="#FFB300"
                                             Style="{StaticResource KpiValeur}"
                                             Text="{Binding Kpi.PiecesEnAlerte}" />
                                         <TextBlock Style="{StaticResource KpiLibelle}" Text="Pièces en alerte de stock" />
@@ -501,20 +528,20 @@
                                             <Grid Margin="0,4">
                                                 <TextBlock
                                                     FontSize="13"
-                                                    Foreground="#455A64"
+                                                    Foreground="#90A4AE"
                                                     Text="{Binding Nom}" />
                                                 <TextBlock
                                                     Margin="0,0,70,0"
                                                     HorizontalAlignment="Right"
                                                     FontSize="13"
                                                     FontWeight="SemiBold"
-                                                    Foreground="#F9A825"
+                                                    Foreground="#FFB300"
                                                     Text="{Binding EnCours}" />
                                                 <TextBlock
                                                     HorizontalAlignment="Right"
                                                     FontSize="13"
                                                     FontWeight="SemiBold"
-                                                    Foreground="#2E7D32"
+                                                    Foreground="#00E676"
                                                     Text="{Binding Terminees}" />
                                             </Grid>
                                         </DataTemplate>

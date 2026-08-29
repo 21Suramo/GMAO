@@ -17,7 +17,11 @@
     <!--  ===== Couleurs de marque =====  -->
     <Color x:Key="CouleurMarqueSombre">#203A43</Color>
     <Color x:Key="CouleurMarque">#2C5364</Color>
-    <Color x:Key="CouleurAccent">#4FC3F7</Color>
+    <!--  Accent primaire = vert moniteur clinique (ex-cyan #4FC3F7). Toutes les surbrillances « actif » basculent au vert.  -->
+    <Color x:Key="CouleurAccent">#00E5A8</Color>
+    <Color x:Key="CouleurAccentVert">#00E5A8</Color>
+    <Color x:Key="CouleurAccentCyan">#29B6F6</Color>
+    <Color x:Key="CouleurAlerte">#FFB300</Color>
 
     <!--  ===== Neutres / texte =====  -->
     <Color x:Key="CouleurTexte">#37474F</Color>
@@ -27,14 +31,18 @@
     <Color x:Key="CouleurSurfaceSecondaire">#ECEFF1</Color>
 
     <!--  ===== Sémantique état =====  -->
-    <Color x:Key="CouleurErreur">#C62828</Color>
-    <Color x:Key="CouleurSucces">#2E7D32</Color>
+    <Color x:Key="CouleurErreur">#FF3B30</Color>
+    <Color x:Key="CouleurSucces">#00E676</Color>
     <Color x:Key="CouleurInfo">#0277BD</Color>
 
     <!--  ===== Pinceaux de marque =====  -->
     <SolidColorBrush x:Key="PinceauMarqueSombre" Color="{StaticResource CouleurMarqueSombre}" />
     <SolidColorBrush x:Key="PinceauMarque" Color="{StaticResource CouleurMarque}" />
     <SolidColorBrush x:Key="PinceauAccent" Color="{StaticResource CouleurAccent}" />
+    <!--  Accents « Moniteur Clinique »  -->
+    <SolidColorBrush x:Key="PinceauAccentVert" Color="{StaticResource CouleurAccentVert}" />
+    <SolidColorBrush x:Key="PinceauAccentCyan" Color="{StaticResource CouleurAccentCyan}" />
+    <SolidColorBrush x:Key="PinceauAlerte" Color="{StaticResource CouleurAlerte}" />
 
     <!--  ===== Pinceaux neutres / texte =====  -->
     <SolidColorBrush x:Key="PinceauTexte" Color="{StaticResource CouleurTexte}" />
@@ -53,18 +61,18 @@
         Base #203A43/#16242B. Alpha élevé (0.92-0.95) : assez opaque pour la lisibilité du texte,
         juste un soupçon de translucidité pour la profondeur. Texte clair obligatoire par-dessus.
     -->
-    <SolidColorBrush x:Key="PinceauFondHud" Color="#F216242B" />
-    <SolidColorBrush x:Key="PinceauSurfaceHud" Color="#EB243A44" />
-    <SolidColorBrush x:Key="PinceauSurfaceHudBordure" Color="#334FC3F7" />
+    <SolidColorBrush x:Key="PinceauFondHud" Color="#0A0E12" />
+    <SolidColorBrush x:Key="PinceauSurfaceHud" Color="#12181F" />
+    <SolidColorBrush x:Key="PinceauSurfaceHudBordure" Color="#3300E5A8" />
     <SolidColorBrush x:Key="PinceauTexteHud" Color="#ECEFF1" />
     <SolidColorBrush x:Key="PinceauTexteHudSecondaire" Color="#90A4AE" />
 
     <!--  Puce/chip neutre + éléments de tableau sombre (zébrage, survol, sélection, séparateur)  -->
     <SolidColorBrush x:Key="PinceauChipHud" Color="#24FFFFFF" />
-    <SolidColorBrush x:Key="PinceauLigneImpaireHud" Color="#20FFFFFF" />
-    <SolidColorBrush x:Key="PinceauSurvolHud" Color="#1F4FC3F7" />
-    <SolidColorBrush x:Key="PinceauSelectionHud" Color="#404FC3F7" />
-    <SolidColorBrush x:Key="PinceauSeparateurHud" Color="#33FFFFFF" />
+    <SolidColorBrush x:Key="PinceauLigneImpaireHud" Color="#14FFFFFF" />
+    <SolidColorBrush x:Key="PinceauSurvolHud" Color="#1F00E5A8" />
+    <SolidColorBrush x:Key="PinceauSelectionHud" Color="#3800E5A8" />
+    <SolidColorBrush x:Key="PinceauSeparateurHud" Color="#22FFFFFF" />
 
     <!--  Dégradé de marque (bandeaux / en-têtes), repris du gradient inline de LoginWindow  -->
     <LinearGradientBrush x:Key="PinceauDegradeMarque" StartPoint="0,0" EndPoint="1,1">

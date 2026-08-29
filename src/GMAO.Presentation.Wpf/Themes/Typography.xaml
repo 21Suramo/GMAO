@@ -31,9 +31,13 @@
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
-    <!--  Texte technique / secondaire (n° de série, métadonnées, valeurs monospace)  -->
+    <!--
+        Texte technique monospace « Moniteur Clinique » : valeurs numériques, n° de série,
+        références, montants MAD. Cascadia Code en tête (repli Consolas), pour l'aspect
+        écran d'appareil médical. À appliquer explicitement via Style="{StaticResource TexteTechnique}".
+    -->
     <Style x:Key="TexteTechnique" TargetType="TextBlock">
-        <Setter Property="FontFamily" Value="Consolas, Cascadia Mono, Courier New" />
+        <Setter Property="FontFamily" Value="Cascadia Code, Consolas, Courier New" />
         <Setter Property="FontSize" Value="12" />
         <Setter Property="Foreground" Value="{StaticResource PinceauTexteSecondaire}" />
     </Style>

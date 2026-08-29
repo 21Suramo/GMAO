@@ -61,13 +61,13 @@
     <!--  Implicite : tous les boutons héritent du comportement, gardent leurs couleurs inline  -->
     <Style BasedOn="{StaticResource BoutonBase}" TargetType="Button" />
 
-    <!--  Action primaire (teal de marque)  -->
+    <!--  Action primaire = vert « moniteur clinique » sur texte anthracite (fort contraste)  -->
     <Style
         x:Key="BoutonPrimaire"
         BasedOn="{StaticResource BoutonBase}"
         TargetType="Button">
-        <Setter Property="Background" Value="{StaticResource PinceauMarque}" />
-        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Background" Value="{StaticResource PinceauAccentVert}" />
+        <Setter Property="Foreground" Value="{StaticResource PinceauFondHud}" />
         <Setter Property="FontWeight" Value="SemiBold" />
     </Style>
 
@@ -191,6 +191,72 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <!--  ============ SIGNATURE « MONITEUR CLINIQUE » ============  -->
+
+    <!--
+        Carte de moniteur : coins peu arrondis (5 px), fond surface HUD, liseré 1 px.
+        La couleur du liseré est « bindable selon statut » : par défaut liseré vert discret,
+        chaque instance peut le surcharger via BorderBrush="{Binding StatutPinceau}"
+        (ex. rouge = patient connecté / critique, ambre = alerte, vert = nominal).
+    -->
+    <Style x:Key="CardMoniteur" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource PinceauSurfaceHud}" />
+        <Setter Property="BorderBrush" Value="{StaticResource PinceauSurfaceHudBordure}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="Padding" Value="18,16" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
+
+    <!--
+        Point de statut pulsant : pastille dont l'opacité oscille en boucle douce (respiration).
+        Couleur « bindable » via Fill sur l'instance (défaut vert nominal).
+        Usage : <Ellipse Style="{StaticResource PointStatutPulsant}" Fill="{StaticResource PinceauErreur}" />
+    -->
+    <Style x:Key="PointStatutPulsant" TargetType="Ellipse">
+        <Setter Property="Width" Value="10" />
+        <Setter Property="Height" Value="10" />
+        <Setter Property="Fill" Value="{StaticResource PinceauAccentVert}" />
+        <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation
+                            AutoReverse="True"
+                            RepeatBehavior="Forever"
+                            Storyboard.TargetProperty="Opacity"
+                            From="1.0"
+                            To="0.28"
+                            Duration="0:0:1.1">
+                            <DoubleAnimation.EasingFunction>
+                                <SineEase EasingMode="EaseInOut" />
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+        Tracé décoratif « courbe de moniteur » (allure ECG), accent vert, faible opacité.
+        Réutilisable : <Path Style="{StaticResource CourbeMoniteur}" Height="46" /> — Stretch=Fill
+        l'étire à la largeur du conteneur. Non interactif.
+    -->
+    <StreamGeometry x:Key="GeometrieCourbeMoniteur">M0,24 L28,24 L34,24 L40,18 L46,24 L70,24 L76,24 L82,8 L88,40 L94,16 L100,24 L140,24 L146,24 L152,18 L158,24 L182,24 L188,24 L194,8 L200,40 L206,16 L212,24 L252,24</StreamGeometry>
+
+    <Style x:Key="CourbeMoniteur" TargetType="Path">
+        <Setter Property="Data" Value="{StaticResource GeometrieCourbeMoniteur}" />
+        <Setter Property="Stroke" Value="{StaticResource PinceauAccentVert}" />
+        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="StrokeLineJoin" Value="Round" />
+        <Setter Property="Stretch" Value="Fill" />
+        <Setter Property="Opacity" Value="0.16" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
     </Style>
 
 </ResourceDictionary>
