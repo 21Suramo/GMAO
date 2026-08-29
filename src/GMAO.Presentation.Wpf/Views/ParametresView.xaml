@@ -9,7 +9,9 @@
         <conv:StringVersVisibiliteConverter x:Key="StrVisib" />
         <Style x:Key="Carte" TargetType="Border">
             <Setter Property="Background" Value="{StaticResource PinceauSurfaceHud}" />
-            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="BorderBrush" Value="{StaticResource PinceauSurfaceHudBordure}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="6" />
             <Setter Property="Padding" Value="22" />
             <Setter Property="Margin" Value="0,0,0,18" />
             <Setter Property="Effect">
@@ -75,6 +77,7 @@
                         <TextBlock
                             Grid.Row="1"
                             Grid.Column="1"
+                            FontFamily="Cascadia Code, Consolas"
                             Style="{StaticResource Valeur}"
                             Text="{Binding Login}" />
                         <TextBlock
@@ -115,7 +118,9 @@
                         Margin="0,0,0,10"
                         Padding="8,0"
                         VerticalContentAlignment="Center"
-                        BorderBrush="#CFD8DC" />
+                        Background="#0E141B"
+                        BorderBrush="#2E3A44"
+                        Foreground="{StaticResource PinceauTexteHud}" />
                     <TextBlock
                         Margin="0,0,0,4"
                         Style="{StaticResource Cle}"
@@ -126,7 +131,9 @@
                         Margin="0,0,0,10"
                         Padding="8,0"
                         VerticalContentAlignment="Center"
-                        BorderBrush="#CFD8DC" />
+                        Background="#0E141B"
+                        BorderBrush="#2E3A44"
+                        Foreground="{StaticResource PinceauTexteHud}" />
                     <TextBlock
                         Margin="0,0,0,4"
                         Style="{StaticResource Cle}"
@@ -137,19 +144,22 @@
                         Margin="0,0,0,12"
                         Padding="8,0"
                         VerticalContentAlignment="Center"
-                        BorderBrush="#CFD8DC" />
+                        Background="#0E141B"
+                        BorderBrush="#2E3A44"
+                        Foreground="{StaticResource PinceauTexteHud}" />
                     <Button
                         Padding="14,8"
                         HorizontalAlignment="Left"
-                        Background="#2C5364"
+                        Background="#00E5A8"
                         BorderThickness="0"
                         Command="{Binding ChangerMotDePasseCommand}"
                         Content="Modifier le mot de passe"
                         Cursor="Hand"
-                        Foreground="White" />
+                        FontWeight="SemiBold"
+                        Foreground="#0A0E12" />
                     <TextBlock
                         Margin="0,12,0,0"
-                        Foreground="#0277BD"
+                        Foreground="#29B6F6"
                         Text="{Binding MessageMotDePasse}"
                         TextWrapping="Wrap"
                         Visibility="{Binding MessageMotDePasse, Converter={StaticResource StrVisib}}" />
@@ -171,6 +181,7 @@
                                     </Grid.ColumnDefinitions>
                                     <TextBlock
                                         Grid.Column="0"
+                                        FontFamily="Cascadia Code, Consolas"
                                         FontSize="12"
                                         Foreground="{StaticResource PinceauTexteHud}"
                                         Text="{Binding DateConnexion, StringFormat=g}" />
@@ -181,10 +192,10 @@
                                         CornerRadius="9">
                                         <Border.Style>
                                             <Style TargetType="Border">
-                                                <Setter Property="Background" Value="#E8F5E9" />
+                                                <Setter Property="Background" Value="#1A00E676" />
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding Succes}" Value="False">
-                                                        <Setter Property="Background" Value="#FFEBEE" />
+                                                        <Setter Property="Background" Value="#22FF3B30" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -195,10 +206,10 @@
                                             Text="{Binding Statut}">
                                             <TextBlock.Style>
                                                 <Style TargetType="TextBlock">
-                                                    <Setter Property="Foreground" Value="#2E7D32" />
+                                                    <Setter Property="Foreground" Value="#00E676" />
                                                     <Style.Triggers>
                                                         <DataTrigger Binding="{Binding Succes}" Value="False">
-                                                            <Setter Property="Foreground" Value="#C62828" />
+                                                            <Setter Property="Foreground" Value="#FF6B60" />
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
@@ -253,6 +264,7 @@
                         <TextBlock
                             Grid.Row="1"
                             Grid.Column="1"
+                            FontFamily="Cascadia Code, Consolas"
                             Style="{StaticResource Valeur}"
                             Text="{Binding Version}" />
                         <TextBlock
@@ -263,6 +275,7 @@
                         <TextBlock
                             Grid.Row="2"
                             Grid.Column="1"
+                            FontFamily="Cascadia Code, Consolas"
                             Style="{StaticResource Valeur}"
                             Text="{Binding CheminBase}"
                             TextWrapping="Wrap" />
@@ -274,6 +287,7 @@
                         <TextBlock
                             Grid.Row="3"
                             Grid.Column="1"
+                            FontFamily="Cascadia Code, Consolas"
                             Style="{StaticResource Valeur}"
                             Text="{Binding ServeurNotifications}" />
                     </Grid>
