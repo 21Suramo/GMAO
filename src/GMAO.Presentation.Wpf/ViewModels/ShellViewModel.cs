@@ -24,6 +24,17 @@ public partial class ShellViewModel : ObservableObject
     [ObservableProperty] private NavItem? _selectedNav;
     [ObservableProperty] private bool _panneauNotificationsOuvert;
 
+    /// <summary>Nombre d'interventions critiques encore en cours (ni clôturées, ni annulées),
+    /// affiché dans la bande d'état globale. Rouge + indicateur pulsant lorsque &gt; 0.</summary>
+    [ObservableProperty] private int _interventionsCritiques;
+
+    /// <summary>Vrai dès qu'au moins une intervention critique est en cours : pilote la couleur
+    /// rouge et l'indicateur pulsant de la bande d'état.</summary>
+    public bool ADesInterventionsCritiques => InterventionsCritiques > 0;
+
+    partial void OnInterventionsCritiquesChanged(int value) =>
+        OnPropertyChanged(nameof(ADesInterventionsCritiques));
+
     public ObservableCollection<NotificationMessage> Notifications { get; } = new();
 
     /// <summary>Items du pane principal (haut du NavigationView).</summary>
@@ -92,6 +103,29 @@ public partial class ShellViewModel : ObservableObject
         FooterItems = new ObservableCollection<NavItem>(itemsFooter.Where(EstAutorise));
 
         SelectedNav = MenuItems.FirstOrDefault();
+
+        // Alimente le compteur d'interventions critiques de la bande d'état (best-effort).
+        _ = RafraichirCritiquesAsync();
+    }
+
+    /// <summary>Recharge le compteur d'interventions critiques en cours pour la bande d'état.
+    /// Best-effort : toute erreur est silencieuse (la bande d'état ne doit jamais faire planter le shell).</summary>
+    private async Task RafraichirCritiquesAsync()
+    {
+        try
+        {
+            using var scope = _services.CreateScope();
+            var service = scope.ServiceProvider.GetRequiredService<IInterventionService>();
+            var interventions = await service.ListerAsync();
+            InterventionsCritiques = interventions.Count(i =>
+                i.Priorite == Priorite.Critique
+                && i.Etat != EtatIntervention.Cloturee
+                && i.Etat != EtatIntervention.Annulee);
+        }
+        catch
+        {
+            // Compteur indisponible : on laisse la valeur courante sans perturber l'UI.
+        }
     }
 
     partial void OnSelectedNavChanged(NavItem? value)
@@ -131,6 +165,10 @@ public partial class ShellViewModel : ObservableObject
             Notifications.Insert(0, message);
             OnPropertyChanged(nameof(NombreNotifications));
         });
+
+        // Une notification signale souvent une nouvelle intervention (potentiellement critique) :
+        // on rafraîchit le compteur de la bande d'état.
+        _ = RafraichirCritiquesAsync();
     }
 
     private static string CalculerInitiales(string nomComplet)

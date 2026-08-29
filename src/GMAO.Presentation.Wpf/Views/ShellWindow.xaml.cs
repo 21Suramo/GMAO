@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Linq;
 using GMAO.Presentation.Wpf.ViewModels;
 using Wpf.Ui.Controls;
@@ -15,6 +16,31 @@ public partial class ShellWindow : FluentWindowBase
         ViewModel = viewModel;
         DataContext = viewModel;
         PeuplerNavigation();
+
+        // Le rail compact (PaneDisplayMode=Left, fermé) réaffiche parfois le pane à l'application
+        // du template : on force le repli au chargement pour garantir un rail permanent (icônes seules).
+        Loaded += (_, _) => Nav.IsPaneOpen = false;
+
+        // La navigation passe par la commande NaviguerVers (SelectedNav), pas par le SelectedItem
+        // interne du NavigationView : on synchronise donc la surbrillance du rail sur SelectedNav.
+        ViewModel.PropertyChanged += OnViewModelPropertyChanged;
+    }
+
+    private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(ShellViewModel.SelectedNav))
+            SynchroniserSurbrillanceRail();
+    }
+
+    /// <summary>Aligne l'item actif du rail (surbrillance) sur ShellViewModel.SelectedNav,
+    /// quelle que soit l'origine de la navigation (clic rail ou programmatique).</summary>
+    private void SynchroniserSurbrillanceRail()
+    {
+        foreach (var navItem in Nav.MenuItems.OfType<NavigationViewItem>()
+                     .Concat(Nav.FooterMenuItems.OfType<NavigationViewItem>()))
+        {
+            navItem.IsActive = ReferenceEquals(navItem.Tag, ViewModel.SelectedNav);
+        }
     }
 
     /// <summary>
@@ -37,16 +63,23 @@ public partial class ShellWindow : FluentWindowBase
             courant.IsActive = true;
     }
 
-    private NavigationViewItem CreerNavItem(NavItem item) => new()
+    private NavigationViewItem CreerNavItem(NavItem item)
     {
-        Content = item.Titre,
-        Tag = item,
-        Icon = new FontIcon
+        var navItem = new NavigationViewItem
         {
-            FontFamily = new System.Windows.Media.FontFamily("Segoe Fluent Icons, Segoe MDL2 Assets"),
-            Glyph = item.Icone,
-        },
-        Command = ViewModel.NaviguerVersCommand,
-        CommandParameter = item,
-    };
+            Content = item.Titre,
+            Tag = item,
+            Icon = new FontIcon
+            {
+                FontFamily = new System.Windows.Media.FontFamily("Segoe Fluent Icons, Segoe MDL2 Assets"),
+                Glyph = item.Icone,
+            },
+            Command = ViewModel.NaviguerVersCommand,
+            CommandParameter = item,
+        };
+        // Rail compact (icônes seules) : le libellé n'est visible qu'en survol via le ToolTip.
+        navItem.ToolTip = item.Titre;
+        System.Windows.Controls.ToolTipService.SetInitialShowDelay(navItem, 200);
+        return navItem;
+    }
 }

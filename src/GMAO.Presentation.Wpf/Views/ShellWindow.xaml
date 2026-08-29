@@ -44,51 +44,67 @@
     </local:FluentWindowBase.Resources>
 
     <Grid>
+        <Grid.RowDefinitions>
+            <!--  Bandeau caption (boutons fenêtre + glisser)  -->
+            <RowDefinition Height="32" />
+            <!--  Bande d'état globale  -->
+            <RowDefinition Height="Auto" />
+            <!--  Zone principale : rail compact + contenu  -->
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--  Fond sombre derrière la zone caption, pour la continuité visuelle avec la bande d'état  -->
+        <Border Grid.Row="0" Background="{StaticResource PinceauFondHud}" />
+
+        <!--  Bande d'état globale : statut connexion + compteur critiques + notifications  -->
+        <local:BandeEtatGlobale Grid.Row="1" />
+
         <!--
-            Barre latérale : NavigationView WPF-UI (pleine largeur ; le pane s'affiche à gauche
-            et son frame de contenu vide, à droite, est recouvert par la zone de contenu ci-dessous).
+            Zone principale : le NavigationView (rail compact, icônes seules) occupe toute
+            la largeur ; son frame de contenu vide, à droite, est recouvert par la zone de
+            contenu ci-dessous, décalée de la largeur du rail compact (56).
             Items peuplés en code-behind depuis ShellViewModel.MenuItems/FooterItems (RBAC déjà appliqué).
         -->
-        <local:NavigationViewBase
-            x:Name="Nav"
-            Background="#1B2A33"
-            IsBackButtonVisible="Collapsed"
-            IsPaneOpen="True"
-            IsPaneToggleVisible="False"
-            OpenPaneLength="248"
-            PaneDisplayMode="Left"
-            Style="{StaticResource {x:Type ui:NavigationView}}">
-            <local:NavigationViewBase.PaneHeader>
-                <StackPanel Margin="20,24,20,16">
-                    <TextBlock
-                        FontSize="28"
-                        FontWeight="Bold"
-                        Foreground="#00E5A8"
-                        Text="GMAO" />
-                    <TextBlock
-                        FontSize="12"
-                        Foreground="#78909C"
-                        Text="Datex-Ohmeda · MEDICANA" />
-                </StackPanel>
-            </local:NavigationViewBase.PaneHeader>
-            <local:NavigationViewBase.PaneFooter>
-                <!--  Profil + déconnexion  -->
-                <Border
-                    Padding="16,14"
-                    BorderBrush="#2C3E48"
-                    BorderThickness="0,1,0,0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="2">
+            <local:NavigationViewBase
+                x:Name="Nav"
+                Background="#1B2A33"
+                CompactPaneLength="56"
+                IsBackButtonVisible="Collapsed"
+                IsPaneOpen="False"
+                IsPaneToggleVisible="False"
+                PaneDisplayMode="Left"
+                Style="{StaticResource {x:Type ui:NavigationView}}">
+                <local:NavigationViewBase.PaneHeader>
+                    <!--  Logo compact centré (rail = 56 px)  -->
+                    <Border
+                        Width="38"
+                        Height="38"
+                        Margin="0,14,0,10"
+                        HorizontalAlignment="Center"
+                        Background="#1F00E5A8"
+                        BorderBrush="{StaticResource PinceauAccentVert}"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        ToolTip="GMAO — Datex-Ohmeda · MEDICANA">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="18"
+                            FontWeight="Bold"
+                            Foreground="{StaticResource PinceauAccentVert}"
+                            Text="G" />
+                    </Border>
+                </local:NavigationViewBase.PaneHeader>
+                <local:NavigationViewBase.PaneFooter>
+                    <!--  Profil compact (avatar + déconnexion), infos détaillées dans la bande d'état  -->
+                    <StackPanel Margin="0,8,0,12" HorizontalAlignment="Center">
                         <Border
-                            Grid.Column="0"
-                            Width="40"
-                            Height="40"
+                            Width="38"
+                            Height="38"
                             Background="#2C5364"
-                            CornerRadius="20">
+                            CornerRadius="19"
+                            ToolTip="{Binding UtilisateurNom}">
                             <TextBlock
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
@@ -96,24 +112,9 @@
                                 Foreground="White"
                                 Text="{Binding Initiales}" />
                         </Border>
-                        <StackPanel
-                            Grid.Column="1"
-                            Margin="10,0"
-                            VerticalAlignment="Center">
-                            <TextBlock
-                                FontSize="13"
-                                FontWeight="SemiBold"
-                                Foreground="#ECEFF1"
-                                Text="{Binding UtilisateurNom}"
-                                TextTrimming="CharacterEllipsis" />
-                            <TextBlock
-                                FontSize="11"
-                                Foreground="#78909C"
-                                Text="{Binding UtilisateurRole}"
-                                TextTrimming="CharacterEllipsis" />
-                        </StackPanel>
                         <Button
-                            Grid.Column="2"
+                            Margin="0,6,0,0"
+                            HorizontalAlignment="Center"
                             Background="Transparent"
                             BorderThickness="0"
                             Command="{Binding DeconnexionCommand}"
@@ -123,35 +124,33 @@
                             FontSize="16"
                             Foreground="#90A4AE"
                             ToolTip="Se déconnecter" />
-                    </Grid>
-                </Border>
-            </local:NavigationViewBase.PaneFooter>
-        </local:NavigationViewBase>
+                    </StackPanel>
+                </local:NavigationViewBase.PaneFooter>
+            </local:NavigationViewBase>
 
-        <!--  Zone de contenu : superposée à droite du pane (largeur du pane = 248)  -->
-        <Grid Margin="248,0,0,0" Background="#F4F6F8">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+            <!--  Zone de contenu : superposée à droite du rail compact (largeur = 56)  -->
+            <Grid Margin="56,0,0,0" Background="#F4F6F8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-            <Border
-                Grid.Row="0"
-                Padding="28,14"
-                BorderBrush="#E0E4E8"
-                BorderThickness="0,0,0,1">
-                <Border.Style>
-                    <Style TargetType="Border">
-                        <Setter Property="Background" Value="White" />
-                        <Style.Triggers>
-                            <!--  En-tête sombre quand la vue active est HUD (Dashboard / Interventions)  -->
-                            <DataTrigger Binding="{Binding EnteteSombre}" Value="True">
-                                <Setter Property="Background" Value="{StaticResource PinceauFondHud}" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Border.Style>
-                <Grid>
+                <Border
+                    Grid.Row="0"
+                    Padding="28,14"
+                    BorderBrush="#E0E4E8"
+                    BorderThickness="0,0,0,1">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="White" />
+                            <Style.Triggers>
+                                <!--  En-tête sombre quand la vue active est HUD (désormais tous les modules)  -->
+                                <DataTrigger Binding="{Binding EnteteSombre}" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource PinceauFondHud}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
                     <TextBlock
                         VerticalAlignment="Center"
                         FontSize="20"
@@ -168,167 +167,22 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
+                </Border>
 
-                    <!--  Cloche de notifications (décalée pour ne pas passer sous les boutons de fenêtre)  -->
-                    <Grid
-                        Margin="0,0,140,0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center">
-                        <Button
-                            x:Name="BoutonCloche"
-                            Width="40"
-                            Height="40"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Command="{Binding BasculerNotificationsCommand}"
-                            Content="&#xEA8F;"
-                            Cursor="Hand"
-                            FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
-                            FontSize="18">
-                            <Button.Style>
-                                <Style BasedOn="{StaticResource BoutonBase}" TargetType="Button">
-                                    <Setter Property="Foreground" Value="#546E7A" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding EnteteSombre}" Value="True">
-                                            <Setter Property="Foreground" Value="{StaticResource PinceauTexteHudSecondaire}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                        <Border
-                            Height="18"
-                            MinWidth="18"
-                            Margin="0,2,2,0"
-                            Padding="4,0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            Background="#FF3B30"
-                            CornerRadius="9">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding NombreNotifications}" Value="0">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontSize="10"
-                                FontWeight="Bold"
-                                Foreground="White"
-                                Text="{Binding NombreNotifications}" />
-                        </Border>
-
-                        <Popup
-                            AllowsTransparency="True"
-                            IsOpen="{Binding PanneauNotificationsOuvert}"
-                            Placement="Bottom"
-                            PlacementTarget="{Binding ElementName=BoutonCloche}"
-                            PopupAnimation="Fade"
-                            StaysOpen="False">
-                            <Border
-                                Width="360"
-                                Margin="8"
-                                Background="White"
-                                BorderBrush="#E0E4E8"
-                                BorderThickness="1"
-                                CornerRadius="10">
-                                <Border.Effect>
-                                    <DropShadowEffect
-                                        BlurRadius="18"
-                                        Direction="270"
-                                        ShadowDepth="3"
-                                        Color="#33000000" />
-                                </Border.Effect>
-                                <DockPanel Margin="14">
-                                    <Grid Margin="0,0,0,8" DockPanel.Dock="Top">
-                                        <TextBlock
-                                            FontSize="15"
-                                            FontWeight="SemiBold"
-                                            Foreground="#203A43"
-                                            Text="Notifications" />
-                                        <Button
-                                            HorizontalAlignment="Right"
-                                            Background="Transparent"
-                                            BorderThickness="0"
-                                            Command="{Binding EffacerNotificationsCommand}"
-                                            Content="Tout effacer"
-                                            Cursor="Hand"
-                                            FontSize="12"
-                                            Foreground="#0277BD" />
-                                    </Grid>
-                                    <TextBlock
-                                        Margin="0,8"
-                                        DockPanel.Dock="Top"
-                                        FontSize="12"
-                                        Foreground="#90A4AE"
-                                        Text="Aucune notification">
-                                        <TextBlock.Style>
-                                            <Style TargetType="TextBlock">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding NombreNotifications}" Value="0">
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                    <ScrollViewer MaxHeight="380" VerticalScrollBarVisibility="Auto">
-                                        <ItemsControl ItemsSource="{Binding Notifications}">
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Border
-                                                        Margin="0,0,0,6"
-                                                        Padding="10"
-                                                        Background="#F4F6F8"
-                                                        CornerRadius="8">
-                                                        <StackPanel>
-                                                            <TextBlock
-                                                                FontSize="13"
-                                                                FontWeight="SemiBold"
-                                                                Foreground="#263238"
-                                                                Text="{Binding Titre}" />
-                                                            <TextBlock
-                                                                Margin="0,2,0,0"
-                                                                FontSize="12"
-                                                                Foreground="#546E7A"
-                                                                Text="{Binding Message}"
-                                                                TextWrapping="Wrap" />
-                                                            <TextBlock
-                                                                Margin="0,4,0,0"
-                                                                FontSize="10"
-                                                                Foreground="#B0BEC5"
-                                                                Text="{Binding Date, StringFormat=HH:mm:ss}" />
-                                                        </StackPanel>
-                                                    </Border>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-                                    </ScrollViewer>
-                                </DockPanel>
-                            </Border>
-                        </Popup>
-                    </Grid>
-                </Grid>
-            </Border>
-
-            <ContentControl
-                Grid.Row="1"
-                Margin="0"
-                Content="{Binding CurrentViewModel}" />
+                <ContentControl
+                    Grid.Row="1"
+                    Margin="0"
+                    Content="{Binding CurrentViewModel}" />
+            </Grid>
         </Grid>
 
         <!--
             Barre de titre Fluent : restaure réduire/agrandir/fermer + zone de glisser,
-            en overlay transparent pour conserver le rendu bord à bord
+            sur la ligne caption (transparente au-dessus du fond sombre).
         -->
         <ui:TitleBar
             Title=""
+            Grid.Row="0"
             Height="32"
             VerticalAlignment="Top"
             Background="Transparent" />
