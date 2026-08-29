@@ -84,15 +84,18 @@
                 AlternationCount="2"
                 Background="Transparent"
                 BorderThickness="0"
-                ItemContainerStyle="{StaticResource LigneTableHud}"
+                ItemContainerStyle="{StaticResource LigneCarteHud}"
                 ItemsSource="{Binding Rapports}"
                 SelectedItem="{Binding Selection, Mode=TwoWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Border
-                            Margin="2"
-                            Padding="12"
-                            CornerRadius="6">
+                            Margin="2,4"
+                            Padding="14"
+                            Background="#0E141B"
+                            BorderBrush="{StaticResource PinceauSurfaceHudBordure}"
+                            BorderThickness="1"
+                            CornerRadius="8">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -144,21 +147,32 @@
                                     Width="150"
                                     VerticalAlignment="Center">
                                     <Border
-                                        Padding="8,3"
+                                        Padding="9,4"
                                         HorizontalAlignment="Left"
                                         Background="#1A00E676"
-                                        CornerRadius="6"
+                                        BorderBrush="#3300E676"
+                                        BorderThickness="1"
+                                        CornerRadius="8"
                                         Visibility="{Binding ARapport, Converter={StaticResource BoolVisib}}">
-                                        <TextBlock FontSize="11" Foreground="#00E676">
+                                        <TextBlock
+                                            FontSize="11"
+                                            FontWeight="SemiBold"
+                                            Foreground="#00E676">
                                             <Run FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE73E;" /><Run Text=" PDF · " /><Run Text="{Binding DateGeneration, StringFormat=d, Mode=OneWay}" />
                                         </TextBlock>
                                     </Border>
-                                    <TextBlock
-                                        FontSize="11"
-                                        FontStyle="Italic"
-                                        Foreground="#B0BEC5"
-                                        Text="Aucun rapport"
-                                        Visibility="{Binding ARapport, Converter={StaticResource BoolVisibInv}}" />
+                                    <Border
+                                        Padding="9,4"
+                                        HorizontalAlignment="Left"
+                                        Background="#14FFFFFF"
+                                        BorderBrush="#22FFFFFF"
+                                        BorderThickness="1"
+                                        CornerRadius="8"
+                                        Visibility="{Binding ARapport, Converter={StaticResource BoolVisibInv}}">
+                                        <TextBlock FontSize="11" Foreground="#90A4AE">
+                                            <Run FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE711;" /><Run Text=" Aucun PDF" />
+                                        </TextBlock>
+                                    </Border>
                                 </StackPanel>
                             </Grid>
                         </Border>
