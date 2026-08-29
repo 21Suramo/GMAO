@@ -16,7 +16,7 @@
         Margin="24"
         Padding="8"
         Background="{StaticResource PinceauSurfaceHud}"
-        CornerRadius="12">
+        CornerRadius="6">
         <Border.Effect>
             <DropShadowEffect
                 BlurRadius="14"
@@ -36,11 +36,12 @@
                     <Button
                         Margin="0,0,8,0"
                         Padding="12,6"
-                        Background="#2C5364"
+                        Background="#00E5A8"
                         BorderThickness="0"
                         Command="{Binding GenererCommand}"
                         Cursor="Hand"
-                        Foreground="White">
+                        FontWeight="SemiBold"
+                        Foreground="#0A0E12">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock
                                 Margin="0,0,6,0"
@@ -73,7 +74,7 @@
             <TextBlock
                 Margin="16,0,16,8"
                 DockPanel.Dock="Top"
-                Foreground="#0277BD"
+                Foreground="#29B6F6"
                 Text="{Binding Message}"
                 TextWrapping="Wrap"
                 Visibility="{Binding Message, Converter={StaticResource StrVisib}}" />
@@ -91,7 +92,7 @@
                         <Border
                             Margin="2"
                             Padding="12"
-                            CornerRadius="8">
+                            CornerRadius="6">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -102,6 +103,7 @@
 
                                 <StackPanel Grid.Column="0" Width="120">
                                     <TextBlock
+                                        FontFamily="Cascadia Code, Consolas"
                                         FontWeight="SemiBold"
                                         Foreground="{StaticResource PinceauTexteHud}"
                                         Text="{Binding NumeroDI}" />
@@ -117,6 +119,7 @@
                                     VerticalAlignment="Center">
                                     <TextBlock Foreground="{StaticResource PinceauTexteHud}" Text="{Binding ClientNom}" />
                                     <TextBlock
+                                        FontFamily="Cascadia Code, Consolas"
                                         FontSize="11"
                                         Foreground="#90A4AE"
                                         Text="{Binding AppareilSerie}" />
@@ -143,10 +146,10 @@
                                     <Border
                                         Padding="8,3"
                                         HorizontalAlignment="Left"
-                                        Background="#E8F5E9"
-                                        CornerRadius="9"
+                                        Background="#1A00E676"
+                                        CornerRadius="6"
                                         Visibility="{Binding ARapport, Converter={StaticResource BoolVisib}}">
-                                        <TextBlock FontSize="11" Foreground="#2E7D32">
+                                        <TextBlock FontSize="11" Foreground="#00E676">
                                             <Run FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE73E;" /><Run Text=" PDF · " /><Run Text="{Binding DateGeneration, StringFormat=d, Mode=OneWay}" />
                                         </TextBlock>
                                     </Border>
