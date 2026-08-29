@@ -16,6 +16,8 @@
             <ColumnDefinition Width="1.5*" />
             <ColumnDefinition Width="18" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="18" />
+            <ColumnDefinition Width="320" />
         </Grid.ColumnDefinitions>
 
         <!--  Liste  -->
@@ -277,63 +279,96 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </StackPanel>
-
-                    <!--  Mouvement de stock  -->
-                    <Border
-                        Height="1"
-                        Margin="0,18"
-                        Background="{StaticResource PinceauChipHud}" />
-                    <TextBlock
-                        Margin="0,0,0,8"
-                        FontSize="11"
-                        FontWeight="SemiBold"
-                        Foreground="#90A4AE"
-                        Text="MOUVEMENT DE STOCK" />
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="90" />
-                        </Grid.ColumnDefinitions>
-                        <ComboBox
-                            Grid.Column="0"
-                            Height="32"
-                            Margin="0,0,8,0"
-                            ItemsSource="{Binding TypesMouvement}"
-                            SelectedItem="{Binding TypeMouvement}" />
-                        <TextBox
-                            Grid.Column="1"
-                            Height="32"
-                            Padding="6,0"
-                            VerticalContentAlignment="Center"
-                            Text="{Binding Quantite, UpdateSourceTrigger=PropertyChanged}" />
-                    </Grid>
-                    <TextBox
-                        Height="30"
-                        Margin="0,8,0,0"
-                        Padding="6,0"
-                        VerticalContentAlignment="Center"
-                        BorderBrush="#CFD8DC"
-                        Text="{Binding Motif, UpdateSourceTrigger=PropertyChanged}"
-                        ToolTip="Motif (facultatif)" />
-                    <Button
-                        Margin="0,10,0,0"
-                        Padding="12,7"
-                        HorizontalAlignment="Left"
-                        Background="#00E5A8"
-                        BorderThickness="0"
-                        Command="{Binding EnregistrerMouvementCommand}"
-                        Content="Enregistrer le mouvement"
-                        Cursor="Hand"
-                        FontWeight="SemiBold"
-                        Foreground="#0A0E12" />
-                    <TextBlock
-                        Margin="0,10,0,0"
-                        Foreground="#29B6F6"
-                        Text="{Binding Message}"
-                        TextWrapping="Wrap"
-                        Visibility="{Binding Message, Converter={StaticResource StrVisib}}" />
                 </StackPanel>
             </ScrollViewer>
+        </Border>
+
+        <!--  Panneau latéral droit : mouvement de stock (carte moniteur clinique)  -->
+        <Border
+            Grid.Column="4"
+            Style="{StaticResource CardMoniteur}"
+            Visibility="{Binding Selection, Converter={StaticResource NullVisib}}">
+            <StackPanel>
+                <TextBlock
+                    FontSize="11"
+                    FontWeight="SemiBold"
+                    Foreground="{StaticResource PinceauAccentVert}"
+                    Text="MOUVEMENT DE STOCK" />
+                <TextBlock
+                    Margin="0,12,0,0"
+                    FontSize="14"
+                    FontWeight="SemiBold"
+                    Foreground="{StaticResource PinceauTexteHud}"
+                    Text="{Binding Selection.Nom}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Margin="0,2,0,0"
+                    FontFamily="Cascadia Code, Consolas"
+                    FontSize="12"
+                    Foreground="#90A4AE"
+                    Text="{Binding Selection.Reference}" />
+                <TextBlock
+                    Margin="0,10,0,0"
+                    FontSize="12"
+                    Foreground="#78909C">
+                    <Run Text="Stock actuel : " /><Run
+                        FontFamily="Cascadia Code, Consolas"
+                        Foreground="{StaticResource PinceauTexteHud}"
+                        Text="{Binding Selection.Stock, Mode=OneWay}" /><Run Text=" u." />
+                </TextBlock>
+
+                <Border
+                    Height="1"
+                    Margin="0,14"
+                    Background="{StaticResource PinceauSeparateurHud}" />
+
+                <TextBlock
+                    Margin="0,0,0,4"
+                    FontSize="12"
+                    Foreground="#78909C"
+                    Text="Type de mouvement" />
+                <ComboBox
+                    Height="32"
+                    ItemsSource="{Binding TypesMouvement}"
+                    SelectedItem="{Binding TypeMouvement}" />
+                <TextBlock
+                    Margin="0,10,0,4"
+                    FontSize="12"
+                    Foreground="#78909C"
+                    Text="Quantité" />
+                <TextBox
+                    Height="32"
+                    Padding="6,0"
+                    VerticalContentAlignment="Center"
+                    Text="{Binding Quantite, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock
+                    Margin="0,10,0,4"
+                    FontSize="12"
+                    Foreground="#78909C"
+                    Text="Motif (facultatif)" />
+                <TextBox
+                    Height="32"
+                    Padding="6,0"
+                    VerticalContentAlignment="Center"
+                    Text="{Binding Motif, UpdateSourceTrigger=PropertyChanged}" />
+                <Button
+                    Margin="0,16,0,0"
+                    Padding="12,8"
+                    HorizontalAlignment="Stretch"
+                    Background="{StaticResource PinceauAccentVert}"
+                    BorderThickness="0"
+                    Command="{Binding EnregistrerMouvementCommand}"
+                    Content="Enregistrer le mouvement"
+                    Cursor="Hand"
+                    FontWeight="SemiBold"
+                    Foreground="{StaticResource PinceauFondHud}" />
+                <TextBlock
+                    Margin="0,10,0,0"
+                    Foreground="#29B6F6"
+                    Text="{Binding Message}"
+                    TextWrapping="Wrap"
+                    Visibility="{Binding Message, Converter={StaticResource StrVisib}}" />
+            </StackPanel>
         </Border>
     </Grid>
 </UserControl>
