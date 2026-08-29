@@ -51,148 +51,82 @@
                         Foreground="White" />
                 </Grid>
 
-                <!--  Formulaire de déclaration  -->
-                <Border
-                    Margin="10,0,10,8"
-                    Padding="14"
-                    Background="{StaticResource PinceauSurfaceHud}"
-                    CornerRadius="10"
-                    DockPanel.Dock="Top"
-                    Visibility="{Binding CreationVisible, Converter={StaticResource BoolVisib}}">
-                    <StackPanel>
-                        <TextBlock
-                            Margin="0,0,0,8"
-                            FontWeight="SemiBold"
-                            Foreground="{StaticResource PinceauTexteHud}"
-                            Text="Déclarer une intervention" />
-                        <TextBlock
-                            FontSize="12"
-                            Foreground="{StaticResource PinceauTexteHudSecondaire}"
-                            Text="Respirateur" />
-                        <ComboBox
-                            Height="32"
-                            Margin="0,2,0,8"
-                            DisplayMemberPath="NumeroSerie"
-                            ItemsSource="{Binding Respirateurs}"
-                            SelectedItem="{Binding NouveauRespirateur}" />
-                        <TextBlock
-                            FontSize="12"
-                            Foreground="{StaticResource PinceauTexteHudSecondaire}"
-                            Text="Description de la panne" />
-                        <TextBox
-                            Height="48"
-                            Margin="0,2,0,8"
-                            Padding="6"
-                            AcceptsReturn="True"
-                            Text="{Binding NouvelleDescription, UpdateSourceTrigger=PropertyChanged}"
-                            TextWrapping="Wrap" />
-                        <TextBlock
-                            FontSize="12"
-                            Foreground="{StaticResource PinceauTexteHudSecondaire}"
-                            Text="Priorité" />
-                        <ComboBox
-                            Height="32"
-                            Margin="0,2,0,8"
-                            ItemsSource="{Binding Priorites}"
-                            SelectedItem="{Binding NouvellePriorite}" />
-                        <CheckBox
-                            Margin="0,2,0,8"
-                            Content="Patient connecté (déclenche une DI critique)"
-                            FontWeight="SemiBold"
-                            Foreground="#C62828"
-                            IsChecked="{Binding NouveauPatientConnecte}" />
-                        <TextBlock
-                            FontSize="12"
-                            Foreground="{StaticResource PinceauTexteHudSecondaire}"
-                            Text="Symptômes" />
-                        <ItemsControl Margin="0,2,0,8" ItemsSource="{Binding Symptomes}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox
-                                        Margin="0,2"
-                                        Content="{Binding Libelle}"
-                                        IsChecked="{Binding Selectionne}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                        <Button
-                            Padding="14,7"
-                            HorizontalAlignment="Left"
-                            Background="#2E7D32"
-                            BorderThickness="0"
-                            Command="{Binding CreerCommand}"
-                            Content="Créer la DI"
-                            Cursor="Hand"
-                            Foreground="White" />
-                        <TextBlock
-                            Margin="0,8,0,0"
-                            Foreground="#C62828"
-                            Text="{Binding Message}"
-                            TextWrapping="Wrap"
-                            Visibility="{Binding Message, Converter={StaticResource StrVisib}}" />
-                    </StackPanel>
-                </Border>
-
+                <!--
+                    Le formulaire de déclaration est désormais un panneau latéral (overlay col 2), plus bas.
+                    La liste occupe donc toute la hauteur en permanence.
+                -->
                 <ListView
+                    Background="Transparent"
                     BorderThickness="0"
+                    ItemContainerStyle="{StaticResource LigneCarteHud}"
                     ItemsSource="{Binding Interventions}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     SelectedItem="{Binding Selection, Mode=TwoWay}">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                            <Setter Property="Padding" Value="6" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Border
-                                Margin="2"
-                                Padding="10"
-                                CornerRadius="8">
-                                <StackPanel>
-                                    <Grid>
-                                        <TextBlock
-                                            FontWeight="SemiBold"
-                                            Foreground="{StaticResource PinceauTexteHud}"
-                                            Text="{Binding NumeroDI}" />
-                                        <Border
-                                            Padding="8,2"
-                                            HorizontalAlignment="Right"
-                                            Background="{Binding Priorite, Converter={StaticResource PrioCouleur}}"
-                                            CornerRadius="9">
+                                Margin="2,3"
+                                Background="#14FFFFFF"
+                                BorderBrush="{StaticResource PinceauSeparateurHud}"
+                                BorderThickness="1"
+                                CornerRadius="10">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="4" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <!--  Pastille de priorité (bande verticale colorée)  -->
+                                    <Rectangle
+                                        Grid.Column="0"
+                                        Margin="0,3"
+                                        Fill="{Binding Priorite, Converter={StaticResource PrioCouleur}}"
+                                        RadiusX="2"
+                                        RadiusY="2" />
+                                    <StackPanel Grid.Column="1" Margin="12,9">
+                                        <Grid>
                                             <TextBlock
-                                                FontSize="10"
                                                 FontWeight="SemiBold"
-                                                Foreground="White"
-                                                Text="{Binding PrioriteLibelle}" />
-                                        </Border>
-                                    </Grid>
-                                    <TextBlock
-                                        Margin="0,3,0,4"
-                                        FontSize="12"
-                                        Foreground="{StaticResource PinceauTexteHudSecondaire}"
-                                        Text="{Binding Description}"
-                                        TextTrimming="CharacterEllipsis" />
-                                    <Grid>
-                                        <Border
-                                            Padding="8,2"
-                                            HorizontalAlignment="Left"
-                                            Background="{Binding Etat, Converter={StaticResource EtatCouleur}}"
-                                            CornerRadius="9">
-                                            <TextBlock
-                                                FontSize="10"
-                                                FontWeight="SemiBold"
-                                                Foreground="White"
-                                                Text="{Binding EtatLibelle}" />
-                                        </Border>
+                                                Foreground="{StaticResource PinceauTexteHud}"
+                                                Text="{Binding NumeroDI}" />
+                                            <Border
+                                                Padding="8,2"
+                                                HorizontalAlignment="Right"
+                                                Background="{Binding Priorite, Converter={StaticResource PrioCouleur}}"
+                                                CornerRadius="9">
+                                                <TextBlock
+                                                    FontSize="10"
+                                                    FontWeight="SemiBold"
+                                                    Foreground="White"
+                                                    Text="{Binding PrioriteLibelle}" />
+                                            </Border>
+                                        </Grid>
                                         <TextBlock
-                                            HorizontalAlignment="Right"
-                                            VerticalAlignment="Center"
-                                            FontSize="11"
-                                            Foreground="#90A4AE"
-                                            Text="{Binding RespirateurSerie}" />
-                                    </Grid>
-                                </StackPanel>
+                                            Margin="0,3,0,4"
+                                            FontSize="12"
+                                            Foreground="{StaticResource PinceauTexteHudSecondaire}"
+                                            Text="{Binding Description}"
+                                            TextTrimming="CharacterEllipsis" />
+                                        <Grid>
+                                            <Border
+                                                Padding="8,2"
+                                                HorizontalAlignment="Left"
+                                                Background="{Binding Etat, Converter={StaticResource EtatCouleur}}"
+                                                CornerRadius="9">
+                                                <TextBlock
+                                                    FontSize="10"
+                                                    FontWeight="SemiBold"
+                                                    Foreground="White"
+                                                    Text="{Binding EtatLibelle}" />
+                                            </Border>
+                                            <TextBlock
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Center"
+                                                FontSize="11"
+                                                Foreground="#90A4AE"
+                                                Text="{Binding RespirateurSerie}" />
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
                             </Border>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -482,6 +416,121 @@
                     <TextBlock
                         Margin="0,14,0,0"
                         Foreground="#0277BD"
+                        Text="{Binding Message}"
+                        TextWrapping="Wrap"
+                        Visibility="{Binding Message, Converter={StaticResource StrVisib}}" />
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!--  Scrim : assombrit le détail derrière le panneau de création ; la liste (col 0) reste pleinement visible.  -->
+        <Border
+            Grid.Column="2"
+            Background="#B3000000"
+            Visibility="{Binding CreationVisible, Converter={StaticResource BoolVisib}}" />
+
+        <!--  Panneau latéral de création (overlay, largeur fixe 400px)  -->
+        <Border
+            Grid.Column="2"
+            Width="400"
+            HorizontalAlignment="Right"
+            Background="{StaticResource PinceauSurfaceHud}"
+            BorderBrush="{StaticResource PinceauSurfaceHudBordure}"
+            BorderThickness="1,0,0,0"
+            CornerRadius="12,0,0,12"
+            Visibility="{Binding CreationVisible, Converter={StaticResource BoolVisib}}">
+            <Border.Effect>
+                <DropShadowEffect
+                    BlurRadius="20"
+                    ShadowDepth="0"
+                    Color="#66000000" />
+            </Border.Effect>
+            <ScrollViewer Padding="18" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <Grid Margin="0,0,0,10">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Foreground="{StaticResource PinceauTexteHud}"
+                            Text="Déclarer une intervention" />
+                        <Button
+                            Width="30"
+                            Height="30"
+                            HorizontalAlignment="Right"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding BasculerCreationCommand}"
+                            Content="&#xE711;"
+                            Cursor="Hand"
+                            FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                            Foreground="{StaticResource PinceauTexteHudSecondaire}"
+                            ToolTip="Fermer" />
+                    </Grid>
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="{StaticResource PinceauTexteHudSecondaire}"
+                        Text="Respirateur" />
+                    <ComboBox
+                        Height="32"
+                        Margin="0,2,0,8"
+                        DisplayMemberPath="NumeroSerie"
+                        ItemsSource="{Binding Respirateurs}"
+                        SelectedItem="{Binding NouveauRespirateur}" />
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="{StaticResource PinceauTexteHudSecondaire}"
+                        Text="Description de la panne" />
+                    <TextBox
+                        MinHeight="60"
+                        MaxHeight="150"
+                        Margin="0,2,0,8"
+                        Padding="6"
+                        AcceptsReturn="True"
+                        Text="{Binding NouvelleDescription, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap"
+                        VerticalScrollBarVisibility="Auto" />
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="{StaticResource PinceauTexteHudSecondaire}"
+                        Text="Priorité" />
+                    <ComboBox
+                        Height="32"
+                        Margin="0,2,0,8"
+                        ItemsSource="{Binding Priorites}"
+                        SelectedItem="{Binding NouvellePriorite}" />
+                    <CheckBox
+                        Margin="0,2,0,8"
+                        Content="Patient connecté (déclenche une DI critique)"
+                        FontWeight="SemiBold"
+                        Foreground="#FF8A80"
+                        IsChecked="{Binding NouveauPatientConnecte}" />
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="{StaticResource PinceauTexteHudSecondaire}"
+                        Text="Symptômes" />
+                    <ItemsControl Margin="0,2,0,8" ItemsSource="{Binding Symptomes}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox
+                                    Margin="0,2"
+                                    Content="{Binding Libelle}"
+                                    IsChecked="{Binding Selectionne}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <Button
+                        Padding="14,7"
+                        HorizontalAlignment="Left"
+                        Background="#2E7D32"
+                        BorderThickness="0"
+                        Command="{Binding CreerCommand}"
+                        Content="Créer la DI"
+                        Cursor="Hand"
+                        Foreground="White" />
+                    <TextBlock
+                        Margin="0,8,0,0"
+                        Foreground="#FF8A80"
                         Text="{Binding Message}"
                         TextWrapping="Wrap"
                         Visibility="{Binding Message, Converter={StaticResource StrVisib}}" />

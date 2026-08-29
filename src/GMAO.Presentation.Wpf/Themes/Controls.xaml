@@ -158,4 +158,39 @@
         </Setter>
     </Style>
 
+    <!--
+        Élément de liste « mini-card » (HUD) : pas de séparateur/zébrage, survol + sélection
+        matérialisés par un fond cyan translucide et un liseré cyan autour de la carte.
+    -->
+    <Style x:Key="LigneCarteHud" TargetType="ListViewItem">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="{StaticResource PinceauTexteHud}" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <Border
+                        x:Name="Bord"
+                        Padding="{TemplateBinding Padding}"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        BorderThickness="1"
+                        CornerRadius="11">
+                        <ContentPresenter />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bord" Property="Background" Value="{StaticResource PinceauSurvolHud}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Bord" Property="Background" Value="{StaticResource PinceauSelectionHud}" />
+                            <Setter TargetName="Bord" Property="BorderBrush" Value="{StaticResource PinceauAccent}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
