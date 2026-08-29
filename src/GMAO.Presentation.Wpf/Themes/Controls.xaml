@@ -93,24 +93,24 @@
 
     <!--  ============ CHAMPS DE SAISIE ============  -->
 
+    <!--  Champs de saisie « moniteur » : fond sombre, texte clair, caret vert (app entièrement sombre)  -->
     <Style TargetType="TextBox">
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="Padding" Value="8,5" />
         <Setter Property="FontSize" Value="13" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="{StaticResource PinceauBordure}" />
-        <Setter Property="Foreground" Value="{StaticResource PinceauTexte}" />
-        <Setter Property="Background" Value="{StaticResource PinceauSurface}" />
+        <Setter Property="BorderBrush" Value="#2E3A44" />
+        <Setter Property="Foreground" Value="{StaticResource PinceauTexteHud}" />
+        <Setter Property="Background" Value="#0E141B" />
+        <Setter Property="CaretBrush" Value="{StaticResource PinceauAccentVert}" />
     </Style>
 
-    <Style TargetType="ComboBox">
-        <Setter Property="MinHeight" Value="32" />
-        <Setter Property="Padding" Value="8,5" />
-        <Setter Property="FontSize" Value="13" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Foreground" Value="{StaticResource PinceauTexte}" />
-    </Style>
+    <!--
+        Pas de style ComboBox implicite : on laisse le thème sombre de WPF-UI (ui:ControlsDictionary,
+        fusionné avant ce dictionnaire) styliser les listes déroulantes en sombre. Un override
+        « propriétés seules » ici retomberait sur le template clair classique de WPF.
+    -->
 
     <!--  ============ LISTES ============  -->
 

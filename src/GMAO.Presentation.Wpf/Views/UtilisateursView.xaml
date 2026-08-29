@@ -10,7 +10,9 @@
         <conv:BoolInverseConverter x:Key="BoolInv" />
         <Style x:Key="Carte" TargetType="Border">
             <Setter Property="Background" Value="{StaticResource PinceauSurfaceHud}" />
-            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="BorderBrush" Value="{StaticResource PinceauSurfaceHudBordure}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="6" />
             <Setter Property="Padding" Value="20" />
             <Setter Property="Effect">
                 <Setter.Value>
@@ -22,11 +24,13 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="Champ" TargetType="TextBox">
+        <Style
+            x:Key="Champ"
+            BasedOn="{StaticResource {x:Type TextBox}}"
+            TargetType="TextBox">
             <Setter Property="Height" Value="34" />
             <Setter Property="Padding" Value="8,0" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="BorderBrush" Value="#CFD8DC" />
             <Setter Property="Margin" Value="0,0,0,10" />
         </Style>
         <Style x:Key="Cle" TargetType="TextBlock">
@@ -116,6 +120,7 @@
                                         Foreground="{StaticResource PinceauTexteHud}"
                                         Text="{Binding NomComplet}" />
                                     <TextBlock
+                                        FontFamily="Cascadia Code, Consolas"
                                         FontSize="11"
                                         Foreground="#90A4AE"
                                         Text="{Binding Login}" />
@@ -134,10 +139,10 @@
                                     CornerRadius="8">
                                     <Border.Style>
                                         <Style TargetType="Border">
-                                            <Setter Property="Background" Value="#E8F5E9" />
+                                            <Setter Property="Background" Value="#1A00E676" />
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Actif}" Value="False">
-                                                    <Setter Property="Background" Value="#FFEBEE" />
+                                                    <Setter Property="Background" Value="#22FF3B30" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -146,11 +151,11 @@
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Text" Value="Oui" />
-                                                <Setter Property="Foreground" Value="#2E7D32" />
+                                                <Setter Property="Foreground" Value="#00E676" />
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding Actif}" Value="False">
                                                         <Setter Property="Text" Value="Non" />
-                                                        <Setter Property="Foreground" Value="#C62828" />
+                                                        <Setter Property="Foreground" Value="#FF6B60" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -164,23 +169,24 @@
                                     <Button
                                         Margin="0,0,6,0"
                                         Padding="6,3"
-                                        Background="#ECEFF1"
+                                        Background="{StaticResource PinceauChipHud}"
                                         BorderThickness="0"
                                         Command="{Binding DataContext.BasculerActifCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
                                         CommandParameter="{Binding}"
                                         Content="Activer/Désact."
                                         Cursor="Hand"
-                                        FontSize="11" />
+                                        FontSize="11"
+                                        Foreground="{StaticResource PinceauTexteHud}" />
                                     <Button
                                         Padding="6,3"
-                                        Background="#FFEBEE"
+                                        Background="#22FF3B30"
                                         BorderThickness="0"
                                         Command="{Binding DataContext.SupprimerCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
                                         CommandParameter="{Binding}"
                                         Content="Suppr."
                                         Cursor="Hand"
                                         FontSize="11"
-                                        Foreground="#C62828" />
+                                        Foreground="#FF6B60" />
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>
@@ -202,11 +208,12 @@
                         <Button
                             Padding="10,5"
                             HorizontalAlignment="Right"
-                            Background="#ECEFF1"
+                            Background="{StaticResource PinceauChipHud}"
                             BorderThickness="0"
                             Command="{Binding NouveauCommand}"
                             Content="Nouveau"
-                            Cursor="Hand" />
+                            Cursor="Hand"
+                            Foreground="{StaticResource PinceauTexteHud}" />
                     </Grid>
 
                     <TextBlock Style="{StaticResource Cle}" Text="Login" />
@@ -239,7 +246,9 @@
                         Margin="0,0,0,4"
                         Padding="8,0"
                         VerticalContentAlignment="Center"
-                        BorderBrush="#CFD8DC" />
+                        Background="#0E141B"
+                        BorderBrush="#2E3A44"
+                        Foreground="{StaticResource PinceauTexteHud}" />
                     <TextBlock
                         Margin="0,0,0,12"
                         FontSize="11"
@@ -250,19 +259,21 @@
                     <Button
                         Margin="0,0,0,8"
                         Padding="14,9"
-                        Background="#2C5364"
+                        Background="#00E5A8"
                         BorderThickness="0"
                         Command="{Binding EnregistrerCommand}"
                         Content="Enregistrer"
                         Cursor="Hand"
-                        Foreground="White" />
+                        FontWeight="SemiBold"
+                        Foreground="#0A0E12" />
                     <Button
                         Padding="14,9"
-                        Background="#ECEFF1"
+                        Background="{StaticResource PinceauChipHud}"
                         BorderThickness="0"
                         Command="{Binding ReinitialiserMotDePasseCommand}"
                         Content="Réinitialiser le mot de passe"
                         Cursor="Hand"
+                        Foreground="{StaticResource PinceauTexteHud}"
                         IsEnabled="{Binding EstCreation, Converter={StaticResource BoolInv}}" />
 
                     <Border
@@ -272,10 +283,13 @@
                         Visibility="{Binding Message, Converter={StaticResource StrVisib}}">
                         <Border.Style>
                             <Style TargetType="Border">
-                                <Setter Property="Background" Value="#E3F2FD" />
+                                <Setter Property="Background" Value="#1A29B6F6" />
+                                <Setter Property="BorderBrush" Value="#3329B6F6" />
+                                <Setter Property="BorderThickness" Value="1" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding MessageEstErreur}" Value="True">
-                                        <Setter Property="Background" Value="#FFEBEE" />
+                                        <Setter Property="Background" Value="#22FF3B30" />
+                                        <Setter Property="BorderBrush" Value="#66FF3B30" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
