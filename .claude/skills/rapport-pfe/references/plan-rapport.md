@@ -1,111 +1,156 @@
-# Plan détaillé du rapport
+# Plan du mémoire — squelette conforme au template UM6SS
 
-Budget indicatif pour un mémoire de 60-80 pages hors annexes. Ajuster
-proportionnellement si l'utilisateur donne un autre volume.
+Le squelette et l'ordre des parties viennent du template officiel et ne se
+modifient pas. Seuls les titres et le contenu des quatre chapitres sont propres
+au projet GMAO. Budget de pages indicatif : les chapitres doivent surtout rester
+**équilibrés entre eux**, la charte l'exige explicitement.
 
-## Liminaires (non paginés en chiffres arabes)
+## Pages préparatoires (pagination i, ii, iii…)
 
-Page de garde · Dédicaces (1 p., laisser à l'utilisateur) · Remerciements (1 p.) ·
-Résumé français ~200 mots + 5 mots-clés · Abstract anglais, traduction fidèle du
-résumé · Liste des abréviations (GMAO, CMMS, DI, SAV, MTTR, SLA, RBAC, MVVM, DI —
-attention, « DI » sert à la fois pour *Demande d'Intervention* et *Dependency
-Injection* : désambiguïser) · Liste des figures · Liste des tableaux · Sommaire.
+**Page de garde** (non numérotée) — logo UM6SS/ESGB et logo MEDICANA · « Cycle
+Ingénieur : Génie Biomédical » · « Année universitaire `[À COMPLÉTER]` » ·
+« Mémoire de projet de fin d'études » · intitulé du sujet · « Présenté par » +
+`[À COMPLÉTER : nom et prénom]` · « Soutenue publiquement le `[À COMPLÉTER]`,
+devant le jury composé de : » Président(e), Examinateur, Rapporteur,
+Encadrant(e), Invité.
 
-## Introduction générale (2-3 p.)
+**Dédicaces** — à laisser à l'utilisateur, c'est un texte personnel.
 
-Contexte de la maintenance biomédicale → problématique (gestion papier :
-traçabilité, disponibilité des respirateurs, criticité du patient connecté) →
-objectif du PFE → annonce du plan. Aucune référence technique ici.
+**Remerciements** — 1 page. Encadrant académique, encadrant industriel, équipe
+SAV de MEDICANA, jury, corps professoral de l'ESGB. Marquer les noms manquants.
 
-## Chapitre 1 — Contexte général du projet (10-12 p.)
+**Résumé** (1 page, 2 maximum) — contexte de la maintenance biomédicale,
+problématique, approche suivie, résultats obtenus, puis mots-clés : GMAO,
+maintenance corrective, respirateur d'anesthésie, Datex-Ohmeda, génie biomédical.
 
-1.1 Organisme d'accueil : MEDICANA, distributeur officiel Datex-Ohmeda
-    `[À COMPLÉTER : historique, effectifs, organigramme, implantation]`
-1.2 Domaine : les respirateurs d'anesthésie (Aespire, Avance, Aisys) et leur
-    criticité en bloc opératoire
-1.3 Étude de l'existant et critique : gestion sur fichiers/papier, absence de
-    traçabilité, d'analyse des défaillances et de pilotage de la disponibilité
-1.4 Problématique et objectifs
-1.5 Périmètre : maintenance **corrective** uniquement ; exclusions v1 (préventif
-    planifié, facturation, RH, mobile natif) — source `docs/02-cahier-des-charges.md` §2
-1.6 Conduite du projet : découpage en 10 phases incrémentales (0 à 9), démarche
-    itérative — source `docs/00-feuille-de-route.md`. Inclure un Gantt.
+**Abstract** — traduction fidèle du résumé, mêmes mots-clés.
 
-## Chapitre 2 — Analyse et spécification des besoins (12-15 p.)
+**ملخص** — traduction arabe du résumé. Obligatoire.
 
-2.1 Acteurs : Administrateur, Responsable SAV, Ingénieur Biomédical, Technicien,
-    Client Hôpital, Invité (tableau des objectifs par acteur)
-2.2 Besoins fonctionnels : reprendre les BF-01…, puis le tableau traçable
-    EF-01 → EF-20 (ID, exigence, priorité, module)
-2.3 Besoins non fonctionnels : architecture, qualité, sécurité, performance
-    (< 2 s dashboard), portabilité, ergonomie
-2.4 Diagramme de cas d'utilisation général + 2 ou 3 descriptions textuelles
-    détaillées (scénario nominal, alternatifs, préconditions) pour les cas
-    structurants : *Déclarer une intervention*, *Affecter une intervention*,
-    *Clôturer via check-list*
-2.5 Règles de gestion. Au minimum RG « patient connecté ⇒ priorité critique »,
-    blocage HORS SERVICE, check-list de clôture obligatoire.
+**Table des matières** · **Liste des abréviations** · **Liste des tableaux** ·
+**Liste des figures** — toutes paginées et générées automatiquement.
 
-## Chapitre 3 — Conception (15-18 p.)
+Abréviations à prévoir : UM6SS, ESGB, GMAO, CMMS, SAV, PFE, DI (Demande
+d'Intervention), MTTR, SLA, RBAC, MVVM, UML, ORM, API, PDF, QR. **Attention :**
+« DI » désigne aussi l'injection de dépendances — la charte interdit les
+ambiguïtés de terme, donc réserver « DI » à la Demande d'Intervention et écrire
+« injection de dépendances » en toutes lettres.
 
-3.1 Architecture logicielle : Clean Architecture, règle de dépendance
-    `Presentation → Application → Domain`, rôle de chaque projet des 7 de la
-    solution, ports/adaptateurs (Persistence et Infrastructure implémentent les
-    interfaces de Application)
-3.2 Justification des choix : pourquoi Clean Architecture pour un PFE maintenable,
-    pourquoi le pattern Result plutôt que des exceptions pour les échecs attendus,
-    pourquoi Strategy pour le moteur d'affectation (testabilité, pureté),
-    pourquoi SQLite embarqué, pourquoi un serveur WebSocket Node.js natif à la
-    place de SignalR (auto-hébergement sous Node)
-3.3 Patrons appliqués : Repository + Unit of Work, MVVM, Injection de dépendances,
-    Strategy, soft-delete et audit centralisés dans `SaveChangesAsync`
-3.4 Diagramme de classes du domaine
-3.5 Modèle de données : les ~25 entités par domaine (Sécurité, Parc, Interventions,
-    Pièces, Planning, Notifications), MCD/MLD, contraintes d'intégrité
-3.6 Diagrammes de séquence : déclaration d'une DI critique de bout en bout
-    (QR → détection patient connecté → priorité critique → moteur d'affectation →
-    notification WebSocket)
-3.7 Diagramme d'états de l'intervention (workflow)
-3.8 Conception de la sécurité : RBAC par `Permission` + `MatricePermissions`,
-    revérification côté base, BCrypt workFactor 12
+## Introduction générale (1 à 2 pages, sections non numérotées)
 
-## Chapitre 4 — Réalisation, tests et déploiement (15-18 p.)
+- **Contexte** — la maintenance des respirateurs d'anesthésie en bloc opératoire,
+  MEDICANA distributeur Datex-Ohmeda, la gestion actuelle sur fichiers et papier.
+- **Objectifs** — ce que le projet vise et ce qu'il exclut.
+- **Méthodologie** — démarche itérative en dix phases incrémentales (0 à 9),
+  d'après `docs/00-feuille-de-route.md`.
+- **Résultats** — annoncés en deux ou trois phrases, sans chiffres ni détail
+  (voir le point tranché au §7 de la charte).
+- **Structure du mémoire** — annonce des quatre chapitres.
 
-4.1 Environnement et outils : .NET 10, WPF, EF Core + SQLite, CommunityToolkit.Mvvm,
-    AutoMapper 13.0.1, FluentValidation, Serilog, iText7 (+ bouncy-castle-adapter),
-    QRCoder, LiveCharts2, BCrypt.Net, Node.js/Express/ws, xUnit/FluentAssertions/Moq
-4.2 Mise en œuvre par module, avec capture d'écran et extrait de code significatif
-    chacun : Authentification & Utilisateurs · Parc & QR Code · Interventions &
-    workflow · Pièces & alertes stock · Rapports PDF · Dashboard KPI (MTTR, délai
-    d'affectation, SLA, disponibilité, Pareto, charge/technicien, coûts) ·
-    Notifications temps réel · Moteur d'affectation automatique
-4.3 Tests : stratégie, les 37 tests unitaires et ce qu'ils couvrent (affectation,
-    PDF, autorisation, matrice RBAC, KPI, validation utilisateur), exemple de test
-4.4 Déploiement : `build.ps1`, `dotnet publish` win-x64, prérequis .NET 10 Desktop
-    Runtime + Node 18+, lancement via `Lancer-GMAO.cmd` — source `docs/06-guide-deploiement.md`
-4.5 Bilan par rapport aux exigences : tableau EF-01…EF-20 × état réel (réalisé /
-    partiel / non réalisé), **aligné sur la feuille de route**. Ne pas cocher
-    « réalisé » un point marqué ⬜ (scan QR, heatmap, thèmes Light/Dark,
-    notifications e-mail, UI de planning, documentation technique).
+## Chapitre 1 — Contexte général du projet
 
-## Conclusion générale et perspectives (2-3 p.)
+- `1.1 Introduction`
+- `1.2` Organisme d'accueil : MEDICANA, distributeur officiel Datex-Ohmeda
+  `[À COMPLÉTER : historique, effectifs, organigramme, implantation]`
+- `1.3` Le respirateur d'anesthésie : gammes Aespire, Avance, Aisys, rôle en bloc
+  opératoire et criticité pour le patient
+- `1.4` Étude de l'existant et critique : absence de traçabilité, d'analyse des
+  défaillances et de pilotage de la disponibilité
+- `1.5` Problématique et objectifs
+- `1.6` Périmètre : maintenance **corrective** uniquement ; exclusions de la v1
+  (préventif planifié, facturation, RH, mobile natif)
+- `1.7` Conduite du projet : découpage en dix phases, planning (figure de Gantt)
+- `1.x Conclusion`
 
-Rappel de la problématique, apports du travail, bilan technique et personnel
-(compétences acquises), puis perspectives — les ⬜ de la feuille de route
-constituent des perspectives honnêtes et crédibles, ainsi que : maintenance
-préventive planifiée, application mobile de scan, notifications e-mail,
-déploiement multi-sites.
+## Chapitre 2 — Analyse et spécification des besoins
 
-## Bibliographie et webographie
+- `2.1 Introduction`
+- `2.2` Acteurs : Administrateur, Responsable SAV, Ingénieur Biomédical,
+  Technicien, Client Hôpital, Invité — tableau des objectifs par acteur
+- `2.3` Besoins fonctionnels : les BF-01…, puis le tableau traçable EF-01 → EF-20
+  (identifiant, exigence, priorité, module)
+- `2.4` Besoins non fonctionnels : architecture, qualité, sécurité, performance
+  (tableau de bord en moins de 2 s), portabilité, ergonomie
+- `2.5` Diagramme de cas d'utilisation, puis deux ou trois descriptions
+  textuelles détaillées (préconditions, scénario nominal, scénarios alternatifs)
+  pour *Déclarer une intervention*, *Affecter une intervention*, *Clôturer via
+  la check-list*
+- `2.6` Règles de gestion : patient connecté ⇒ priorité critique, blocage HORS
+  SERVICE, check-list de clôture obligatoire
+- `2.x Conclusion`
 
-Style IEEE ou APA, cohérent d'un bout à l'autre. Sources réelles uniquement :
-documentation Microsoft .NET/WPF/EF Core, Clean Architecture (R. C. Martin),
-documentation iText7/QRCoder/Serilog, normes de maintenance biomédicale,
-documentation constructeur Datex-Ohmeda/GE Healthcare. **Ne jamais fabriquer de
-référence** : citer une source signifie l'avoir consultée.
+## Chapitre 3 — Conception
+
+- `3.1 Introduction`
+- `3.2` Architecture logicielle : Clean Architecture, règle de dépendance
+  `Presentation → Application → Domain`, rôle des sept projets de la solution,
+  ports et adaptateurs
+- `3.3` Justification des choix : pourquoi Clean Architecture, pourquoi le patron
+  Result plutôt que des exceptions pour les échecs attendus, pourquoi Strategy
+  pour le moteur d'affectation, pourquoi SQLite embarqué, pourquoi un serveur
+  WebSocket natif sous Node.js à la place de SignalR
+- `3.4` Patrons de conception appliqués : Repository et Unit of Work, MVVM,
+  injection de dépendances, Strategy, suppression logique et audit centralisés
+- `3.5` Diagramme de classes du domaine
+- `3.6` Modèle de données : les entités par domaine (Sécurité, Parc,
+  Interventions, Pièces, Planning, Notifications), MCD, MLD, contraintes
+- `3.7` Diagramme de séquence : déclaration d'une intervention critique de bout
+  en bout (QR → détection patient connecté → priorité critique → moteur
+  d'affectation → notification)
+- `3.8` Diagramme d'états de l'intervention
+- `3.9` Conception de la sécurité : RBAC par `Permission` et
+  `MatricePermissions`, revérification côté base, hachage BCrypt
+- `3.x Conclusion`
+
+## Chapitre 4 — Réalisation, tests et déploiement
+
+- `4.1 Introduction`
+- `4.2` Environnement et outils : .NET 10, WPF, EF Core et SQLite,
+  CommunityToolkit.Mvvm, AutoMapper, FluentValidation, Serilog, iText7, QRCoder,
+  LiveCharts2, BCrypt.Net, Node.js avec Express et ws, xUnit, FluentAssertions,
+  Moq
+- `4.3` Mise en œuvre par module — une capture d'écran et un extrait de code
+  significatif chacun : Authentification et utilisateurs · Parc et QR Code ·
+  Interventions et workflow · Pièces et alertes de stock · Rapports PDF ·
+  Tableau de bord et indicateurs (MTTR, délai d'affectation, SLA, disponibilité,
+  Pareto, charge par technicien, coûts) · Notifications temps réel · Moteur
+  d'affectation automatique
+- `4.4` Tests : stratégie, couverture des tests unitaires (affectation, PDF,
+  autorisation, matrice RBAC, indicateurs, validation utilisateur), exemple
+  commenté
+- `4.5` Déploiement : `build.ps1`, publication win-x64, prérequis .NET 10 Desktop
+  Runtime et Node.js 18+, lancement
+- `4.6` Bilan par rapport aux exigences : tableau EF-01…EF-20 croisé avec l'état
+  réel (réalisé / partiel / non réalisé), **aligné sur la feuille de route**.
+  Ne pas déclarer réalisé un point marqué ⬜ : scan QR, carte de chaleur, thèmes
+  clair et sombre, notifications par courriel, interface de planning,
+  documentation technique.
+- `4.x Conclusion`
+
+## Conclusion générale (sections non numérotées)
+
+- **Contributions** — ce que le mémoire apporte.
+- **Critique du travail** — limites assumées : périmètre corrective seulement,
+  modules partiels, absence de déploiement en conditions réelles, jeu de données
+  de démonstration. La charte demande explicitement cette analyse critique.
+- **Travaux futurs** — les ⬜ de la feuille de route, la maintenance préventive
+  planifiée, l'application mobile de scan, les notifications par courriel.
+- **Perspective** — inscription du travail dans un cadre plus large :
+  généralisation à d'autres gammes d'équipements biomédicaux, déploiement
+  multi-sites, apport au pilotage de la disponibilité du parc hospitalier.
+
+## Bibliographie
+
+Entrées numérotées, triées par auteur, groupées par type. Sources réelles
+uniquement : documentation Microsoft .NET, WPF et EF Core ; *Clean Architecture*
+de R. C. Martin ; documentation iText7, QRCoder, Serilog ; normes et référentiels
+de maintenance biomédicale ; documentation constructeur Datex-Ohmeda et GE
+Healthcare ; spécification UML de l'OMG. Privilégier livres et articles aux
+documents web ; toute référence web porte sa date de visite.
 
 ## Annexes
 
-Diagrammes UML pleine page · schéma complet de la base (27 tables) · extraits de
-code (`MoteurAffectation`, `MatricePermissions`, configuration EF) · exemple de
-rapport PDF généré · guide d'installation condensé · manuel utilisateur.
+**Annexe A — Diagrammes UML** (pleine page) · **Annexe B — Schéma complet de la
+base de données** · **Annexe C — Extraits de code** (`MoteurAffectation`,
+`MatricePermissions`, configuration EF) · **Annexe D — Exemple de rapport PDF
+généré** · **Annexe E — Manuel d'installation et manuel utilisateur**.
